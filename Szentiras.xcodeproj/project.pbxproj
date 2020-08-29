@@ -33,6 +33,8 @@
 		8CD247F324FA3AD5008ABCE5 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247F224FA3AD5008ABCE5 /* Result.swift */; };
 		8CD247F524FA3AE7008ABCE5 /* ChapterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247F424FA3AE7008ABCE5 /* ChapterView.swift */; };
 		8CD247F724FA403E008ABCE5 /* ReadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247F624FA403E008ABCE5 /* ReadingViewModel.swift */; };
+		8CD247FA24FA6AC6008ABCE5 /* NetworkLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247F924FA6AC5008ABCE5 /* NetworkLayer.swift */; };
+		8CD247FC24FA6B2C008ABCE5 /* BibliaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247FB24FA6B2C008ABCE5 /* BibliaError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +87,8 @@
 		8CD247F224FA3AD5008ABCE5 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		8CD247F424FA3AE7008ABCE5 /* ChapterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterView.swift; sourceTree = "<group>"; };
 		8CD247F624FA403E008ABCE5 /* ReadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingViewModel.swift; sourceTree = "<group>"; };
+		8CD247F924FA6AC5008ABCE5 /* NetworkLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLayer.swift; sourceTree = "<group>"; };
+		8CD247FB24FA6B2C008ABCE5 /* BibliaError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BibliaError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +142,7 @@
 				8CD247E024FA2DC4008ABCE5 /* Fonts */,
 				8CD247D924FA2B76008ABCE5 /* Constants */,
 				8CD247DC24FA2B8F008ABCE5 /* Extensions */,
+				8CD247F824FA6AAA008ABCE5 /* Services */,
 				8CD247D624FA2B47008ABCE5 /* Model */,
 				8CD247DF24FA2BC4008ABCE5 /* Commons */,
 				8CD247D024FA2A66008ABCE5 /* Navigation */,
@@ -260,6 +265,15 @@
 				8CD247EC24FA2E84008ABCE5 /* BibliaStore.swift */,
 			);
 			path = Store;
+			sourceTree = "<group>";
+		};
+		8CD247F824FA6AAA008ABCE5 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				8CD247F924FA6AC5008ABCE5 /* NetworkLayer.swift */,
+				8CD247FB24FA6B2C008ABCE5 /* BibliaError.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -396,7 +410,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CD247A524FA28E0008ABCE5 /* Persistence.swift in Sources */,
+				8CD247FC24FA6B2C008ABCE5 /* BibliaError.swift in Sources */,
 				8CD247D524FA2AFF008ABCE5 /* ReadingView.swift in Sources */,
+				8CD247FA24FA6AC6008ABCE5 /* NetworkLayer.swift in Sources */,
 				8CD247EF24FA357F008ABCE5 /* IconButton.swift in Sources */,
 				8CD247ED24FA2E84008ABCE5 /* BibliaStore.swift in Sources */,
 				8CD247F124FA3AAE008ABCE5 /* MockData.swift in Sources */,
