@@ -12,18 +12,25 @@ struct IconButton: View {
     var icon: String?
     var size: CGFloat = 44
     var color: Color
+    var font: Font {
+        if size < 50 {
+            return .medium16
+        } else {
+            return .medium18
+        }
+    }
     var body: some View {
         if icon == nil {
             Text(title!.prefix(4))
                 .foregroundColor(.white)
-                .font(.medium18)
+                .font(font)
                 .frame(width: size, height: size)
                 .background(Circle().fill(color))
         }
         if icon != nil {
             Image(systemName: icon!)
                 .foregroundColor(.white)
-                .font(.medium18)
+                .font(font)
                 .frame(width: size, height: size)
                 .background(Circle().fill(color))
         }

@@ -14,7 +14,7 @@ class BibliaStore: ObservableObject {
     @Published var results: [Result] = []
     @Published var isLoading = false
     @Published var error: BibliaError?
-    @Published var currenChapter: Int = 1
+    @Published var currentChapter: Int = 1
     
     var bookCancellable: Cancellable?
     var cancellables = Set<AnyCancellable>()

@@ -17,11 +17,18 @@ struct BookView: View {
         VStack {
             HStack {
                 IconButton(title: store.currentBook.abbreviation, icon: nil, size: 44, color: .dark)
-                IconButton(title: String(store.currenChapter), icon: nil, size: 44, color: .colorYellow)
+                Button(action: {
+                    selectedBook = store.currentBook
+                }, label: {
+                    IconButton(title: String(store.currentChapter), icon: nil, size: 44, color: .colorYellow)
+                })
+                
                 Spacer()
                 Text(store.biblia.shortName)
                     .font(.medium16)
                 Spacer()
+                Color.clear
+                    .frame(width: 44, height: 44)
                 Button(action: {
                     showTranslationSheet.toggle()
                 }, label: {
@@ -47,7 +54,7 @@ struct BookView: View {
             }
             
         }
-        .padding()
+        .padding(.horizontal)
     }
     
     var actionSheet: ActionSheet {

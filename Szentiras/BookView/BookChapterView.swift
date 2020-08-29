@@ -22,7 +22,7 @@ struct BookChapterView: View {
                     ForEach(1...book.chapters, id:\.self) { ch in
                         Button(action: {
                             store.currentBook = book
-                            store.currenChapter = ch
+                            store.currentChapter = ch
                             presentationMode.wrappedValue.dismiss()
                         }, label: {
                             IconButton(title: "\(ch)", icon: nil, size: 54, color: book.covenant == .old ? .colorGreen : .colorBlue)

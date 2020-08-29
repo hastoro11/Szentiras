@@ -12,32 +12,39 @@ struct ReadingView: View {
     @ObservedObject var viewModel = ReadingViewModel()
     @State var showTranslationSheet = false
     @State var showSettings = false
+    @State var hideHeader = false
     var maxNumberOfVerses: Int {
         store.results.map({$0.valasz.versek.count}).max() ?? 0
     }
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
-                HStack {
-                    Spacer()
-                    Text(store.biblia.shortName)
-                        .font(.medium16)
-                    Spacer()
-                    Button(action: {
-                        showSettings.toggle()
-                    }, label: {
-                        IconButton(icon: "textformat", size: 44, color: .colorGreen)
-                    })
+                if !hideHeader {
+                    HStack {
+                        IconButton(title: store.currentBook.abbreviation, icon: nil, size: 44, color: .dark)
+                        IconButton(title: String(store.currentChapter), icon: nil, size: 44, color: .colorYellow)
+                        Spacer()
+                        Text(store.biblia.shortName)
+                            .font(.medium16)
+                        Spacer()
+                        Button(action: {
+                            showSettings.toggle()
+                        }, label: {
+                            IconButton(icon: "textformat", size: 44, color: .colorGreen)
+                        })
+                        
+                        
+                        Button(action: {
+                            showTranslationSheet.toggle()
+                        }, label: {
+                            IconButton(icon: "bubble.left.and.bubble.right", size: 44, color: .colorRed)
+                        })
+                        .actionSheet(isPresented: $showTranslationSheet, content: {
+                            actionSheet
+                        })
+                    }
+                    .transition(AnyTransition.move(edge: .top).combined(with: .opacity))
                     
-                    
-                    Button(action: {
-                        showTranslationSheet.toggle()
-                    }, label: {
-                        IconButton(icon: "bubble.left.and.bubble.right", size: 44, color: .colorRed)
-                    })
-                    .actionSheet(isPresented: $showTranslationSheet, content: {
-                        actionSheet
-                    })
                 }
                 Spacer()
                 if store.isLoading {
@@ -51,6 +58,12 @@ struct ReadingView: View {
                         }
                         
                     }.tabViewStyle(PageTabViewStyle())
+                    .onTapGesture {
+                        withAnimation(.spring()) {
+                            hideHeader.toggle()
+                        }
+                    }
+                    
                 }
                 Spacer()
             }
