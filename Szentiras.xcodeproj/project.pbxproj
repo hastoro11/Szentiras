@@ -35,6 +35,7 @@
 		8CD247F724FA403E008ABCE5 /* ReadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247F624FA403E008ABCE5 /* ReadingViewModel.swift */; };
 		8CD247FA24FA6AC6008ABCE5 /* NetworkLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247F924FA6AC5008ABCE5 /* NetworkLayer.swift */; };
 		8CD247FC24FA6B2C008ABCE5 /* BibliaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247FB24FA6B2C008ABCE5 /* BibliaError.swift */; };
+		8CD247FE24FAB96E008ABCE5 /* BookChapterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247FD24FAB96E008ABCE5 /* BookChapterView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		8CD247F624FA403E008ABCE5 /* ReadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingViewModel.swift; sourceTree = "<group>"; };
 		8CD247F924FA6AC5008ABCE5 /* NetworkLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLayer.swift; sourceTree = "<group>"; };
 		8CD247FB24FA6B2C008ABCE5 /* BibliaError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BibliaError.swift; sourceTree = "<group>"; };
+		8CD247FD24FAB96E008ABCE5 /* BookChapterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookChapterView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +194,7 @@
 			children = (
 				8CD247EE24FA357F008ABCE5 /* IconButton.swift */,
 				8CD247CE24FA2A4C008ABCE5 /* BookView.swift */,
+				8CD247FD24FAB96E008ABCE5 /* BookChapterView.swift */,
 			);
 			path = BookView;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 			files = (
 				8CD247A524FA28E0008ABCE5 /* Persistence.swift in Sources */,
 				8CD247FC24FA6B2C008ABCE5 /* BibliaError.swift in Sources */,
+				8CD247FE24FAB96E008ABCE5 /* BookChapterView.swift in Sources */,
 				8CD247D524FA2AFF008ABCE5 /* ReadingView.swift in Sources */,
 				8CD247FA24FA6AC6008ABCE5 /* NetworkLayer.swift in Sources */,
 				8CD247EF24FA357F008ABCE5 /* IconButton.swift in Sources */,

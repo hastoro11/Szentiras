@@ -9,7 +9,8 @@ import SwiftUI
 
 struct BookView: View {
     @EnvironmentObject var store: BibliaStore
-    @State var showTranslationSheet = false
+    @State var showTranslationSheet = false    
+    @State var selectedBook: Book?
     var columns = [GridItem(.adaptive(minimum: 52, maximum: 56), spacing: 10)]
     
     var body: some View {
@@ -38,6 +39,10 @@ struct BookView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 bookList(books: store.biblia.books.filter({$0.covenant == .new}))
             }
+            .sheet(item: $selectedBook) { book in
+                BookChapterView(book: book)
+                    .environmentObject(store)
+            }
             
         }
         .padding()
@@ -60,8 +65,12 @@ struct BookView: View {
     
     func bookList(books: [Book]) -> some View {
         LazyVGrid(columns: columns, spacing: 10) {
-            ForEach(books) { book in                
-                IconButton(title: book.abbreviation, size: 54, color: book.covenant == .old ? .colorGreen : .colorBlue)
+            ForEach(books) { book in
+                Button(action: {
+                    selectedBook = book
+                }) {
+                    IconButton(title: book.abbreviation, size: 54, color: book.covenant == .old ? .colorGreen : .colorBlue)
+                }
             }
         }
     }
