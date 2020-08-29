@@ -70,6 +70,6 @@ struct BookView: View {
 struct BookView_Previews: PreviewProvider {
     static var previews: some View {
         BookView()
-            .environmentObject(BibliaStore())
+            .environmentObject(BibliaStore(biblia: .init(with: .RUF)))
     }
 }

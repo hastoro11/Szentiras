@@ -12,7 +12,9 @@ struct ReadingView: View {
     @ObservedObject var viewModel = ReadingViewModel()
     @State var showTranslationSheet = false
     @State var showSettings = false
-    
+    var maxNumberOfVerses: Int {
+        store.results.map({$0.valasz.versek.count}).max() ?? 0
+    }
     var body: some View {
         ZStack(alignment: .bottom) {
             VStack {
@@ -37,8 +39,20 @@ struct ReadingView: View {
                         actionSheet
                     })
                 }
-                ChapterView(result: result1)
-                    .environmentObject(viewModel)
+                Spacer()
+                if store.isLoading {
+                    ProgressView("Keresés...")
+                } else {
+                    TabView {
+                        ForEach(store.results) { result in
+                            ChapterView(result: result, maxNumberOfVerses: maxNumberOfVerses)
+                                .environmentObject(viewModel)
+                                .tag(result.keres.hivatkozas)
+                        }
+                        
+                    }.tabViewStyle(PageTabViewStyle())
+                }
+                Spacer()
             }
             .padding(.horizontal)
             .zIndex(0)
@@ -76,10 +90,9 @@ struct ReadingView: View {
                 .zIndex(10)
                 .transition(.move(edge: .bottom))
                 .animation(.spring())
-            }
-            
-            
-        }
+            } // end VStack
+        } // end ZStack
+        
     }
     
     var popover: some View {
@@ -105,6 +118,6 @@ struct ReadingView: View {
 struct ReadingView_Previews: PreviewProvider {
     static var previews: some View {
         ReadingView()
-            .environmentObject(BibliaStore())
+            .environmentObject(BibliaStore(biblia: .init(with: .RUF)))
     }
 }

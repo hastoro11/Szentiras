@@ -10,6 +10,7 @@ import SwiftUI
 struct ChapterView: View {
     var result: Result
     @EnvironmentObject var viewModel: ReadingViewModel
+    var maxNumberOfVerses: Int
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 6) {
@@ -18,20 +19,29 @@ struct ChapterView: View {
                 }
                 
                 if !viewModel.continous {
-                    ForEach(result.valasz.versek.indices) { index in
-                        if viewModel.showIndex {
-                            Group {
-                                Text("\(index+1) ").font(viewModel.indexSize)
-                                    + Text(result.valasz.versek[index].szoveg ?? "")
-                                    .font(viewModel.textSize)
-                            }
-                            .lineSpacing(6)
+                    notContinuous()
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func notContinuous() -> some View {
+        Group {
+            if viewModel.showIndex {
+                ForEach(0..<maxNumberOfVerses, id:\.self) { v in
+                    if v < result.valasz.versek.count {
+                        Group {
+                            Text("\(v+1) ").font(viewModel.indexSize)
+                                + Text(result.valasz.versek[v].szoveg ?? "").font(viewModel.textSize)
                         }
-                        if !viewModel.showIndex {
-                            Text(result.valasz.versek[index].szoveg ?? "")
-                                .font(viewModel.textSize)
-                                .lineSpacing(6)
-                        }
+                        .lineSpacing(6)
+                    }
+                }
+            } else {
+                ForEach(1...maxNumberOfVerses, id:\.self) { v in
+                    if v < result.valasz.versek.count {
+                        Text(result.valasz.versek[v].szoveg ?? "").font(viewModel.textSize).lineSpacing(6)
                     }
                 }
             }
@@ -51,7 +61,7 @@ struct ChapterView: View {
             if !viewModel.showIndex {
                 Text(versek)
                     .font(viewModel.textSize)
-                    .lineSpacing(6)                    
+                    .lineSpacing(6)
             }
             if viewModel.showIndex {
                 text.lineSpacing(6)
@@ -62,7 +72,7 @@ struct ChapterView: View {
 
 struct ChapterView_Previews: PreviewProvider {
     static var previews: some View {
-        ChapterView(result: result1)
+        ChapterView(result: result1, maxNumberOfVerses: result1.valasz.versek.count)
             .environmentObject(ReadingViewModel())
     }
 }

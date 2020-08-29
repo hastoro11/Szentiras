@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MainView: View {
-    @ObservedObject var store = BibliaStore()
+    @ObservedObject var store = BibliaStore(biblia: .init(with: .RUF))
     var body: some View {
         AppTabView()
             .environmentObject(store)
