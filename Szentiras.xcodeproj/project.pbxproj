@@ -15,6 +15,24 @@
 		8CD247A824FA28E0008ABCE5 /* Szentiras.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247A624FA28E0008ABCE5 /* Szentiras.xcdatamodeld */; };
 		8CD247B324FA28E0008ABCE5 /* SzentirasTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247B224FA28E0008ABCE5 /* SzentirasTests.swift */; };
 		8CD247BE24FA28E1008ABCE5 /* SzentirasUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247BD24FA28E1008ABCE5 /* SzentirasUITests.swift */; };
+		8CD247CC24FA2A09008ABCE5 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247CB24FA2A09008ABCE5 /* MainView.swift */; };
+		8CD247CF24FA2A4C008ABCE5 /* BookView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247CE24FA2A4C008ABCE5 /* BookView.swift */; };
+		8CD247D224FA2A7B008ABCE5 /* AppTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247D124FA2A7B008ABCE5 /* AppTabView.swift */; };
+		8CD247D524FA2AFF008ABCE5 /* ReadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247D424FA2AFF008ABCE5 /* ReadingView.swift */; };
+		8CD247D824FA2B65008ABCE5 /* Biblia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247D724FA2B65008ABCE5 /* Biblia.swift */; };
+		8CD247DB24FA2B84008ABCE5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247DA24FA2B84008ABCE5 /* Constants.swift */; };
+		8CD247DE24FA2B9B008ABCE5 /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247DD24FA2B9B008ABCE5 /* Color+Extension.swift */; };
+		8CD247E524FA2DD0008ABCE5 /* FiraSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8CD247E124FA2DD0008ABCE5 /* FiraSans-Bold.ttf */; };
+		8CD247E624FA2DD0008ABCE5 /* FiraSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8CD247E224FA2DD0008ABCE5 /* FiraSans-Medium.ttf */; };
+		8CD247E724FA2DD0008ABCE5 /* FiraSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8CD247E324FA2DD0008ABCE5 /* FiraSans-Light.ttf */; };
+		8CD247E824FA2DD0008ABCE5 /* FiraSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8CD247E424FA2DD0008ABCE5 /* FiraSans-Regular.ttf */; };
+		8CD247EA24FA2E14008ABCE5 /* Font+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247E924FA2E14008ABCE5 /* Font+Extension.swift */; };
+		8CD247ED24FA2E84008ABCE5 /* BibliaStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247EC24FA2E84008ABCE5 /* BibliaStore.swift */; };
+		8CD247EF24FA357F008ABCE5 /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247EE24FA357F008ABCE5 /* IconButton.swift */; };
+		8CD247F124FA3AAE008ABCE5 /* MockData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247F024FA3AAD008ABCE5 /* MockData.swift */; };
+		8CD247F324FA3AD5008ABCE5 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247F224FA3AD5008ABCE5 /* Result.swift */; };
+		8CD247F524FA3AE7008ABCE5 /* ChapterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247F424FA3AE7008ABCE5 /* ChapterView.swift */; };
+		8CD247F724FA403E008ABCE5 /* ReadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247F624FA403E008ABCE5 /* ReadingViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +67,24 @@
 		8CD247B924FA28E0008ABCE5 /* SzentirasUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SzentirasUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CD247BD24FA28E1008ABCE5 /* SzentirasUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SzentirasUITests.swift; sourceTree = "<group>"; };
 		8CD247BF24FA28E1008ABCE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8CD247CB24FA2A09008ABCE5 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		8CD247CE24FA2A4C008ABCE5 /* BookView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookView.swift; sourceTree = "<group>"; };
+		8CD247D124FA2A7B008ABCE5 /* AppTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabView.swift; sourceTree = "<group>"; };
+		8CD247D424FA2AFF008ABCE5 /* ReadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingView.swift; sourceTree = "<group>"; };
+		8CD247D724FA2B65008ABCE5 /* Biblia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Biblia.swift; sourceTree = "<group>"; };
+		8CD247DA24FA2B84008ABCE5 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		8CD247DD24FA2B9B008ABCE5 /* Color+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
+		8CD247E124FA2DD0008ABCE5 /* FiraSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FiraSans-Bold.ttf"; sourceTree = "<group>"; };
+		8CD247E224FA2DD0008ABCE5 /* FiraSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FiraSans-Medium.ttf"; sourceTree = "<group>"; };
+		8CD247E324FA2DD0008ABCE5 /* FiraSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FiraSans-Light.ttf"; sourceTree = "<group>"; };
+		8CD247E424FA2DD0008ABCE5 /* FiraSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "FiraSans-Regular.ttf"; sourceTree = "<group>"; };
+		8CD247E924FA2E14008ABCE5 /* Font+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Font+Extension.swift"; sourceTree = "<group>"; };
+		8CD247EC24FA2E84008ABCE5 /* BibliaStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibliaStore.swift; sourceTree = "<group>"; };
+		8CD247EE24FA357F008ABCE5 /* IconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
+		8CD247F024FA3AAD008ABCE5 /* MockData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockData.swift; sourceTree = "<group>"; };
+		8CD247F224FA3AD5008ABCE5 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		8CD247F424FA3AE7008ABCE5 /* ChapterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterView.swift; sourceTree = "<group>"; };
+		8CD247F624FA403E008ABCE5 /* ReadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +135,20 @@
 		8CD2479A24FA28DE008ABCE5 /* Szentiras */ = {
 			isa = PBXGroup;
 			children = (
-				8CD2479B24FA28DE008ABCE5 /* SzentirasApp.swift */,
-				8CD2479D24FA28DE008ABCE5 /* ContentView.swift */,
+				8CD247E024FA2DC4008ABCE5 /* Fonts */,
+				8CD247D924FA2B76008ABCE5 /* Constants */,
+				8CD247DC24FA2B8F008ABCE5 /* Extensions */,
+				8CD247D624FA2B47008ABCE5 /* Model */,
+				8CD247DF24FA2BC4008ABCE5 /* Commons */,
+				8CD247D024FA2A66008ABCE5 /* Navigation */,
+				8CD247EB24FA2E70008ABCE5 /* Store */,
+				8CD247D324FA2AEE008ABCE5 /* ReadingView */,
+				8CD247CD24FA2A2A008ABCE5 /* BookView */,
+				8CD247CB24FA2A09008ABCE5 /* MainView.swift */,
 				8CD2479F24FA28E0008ABCE5 /* Assets.xcassets */,
 				8CD247A424FA28E0008ABCE5 /* Persistence.swift */,
+				8CD2479B24FA28DE008ABCE5 /* SzentirasApp.swift */,
+				8CD2479D24FA28DE008ABCE5 /* ContentView.swift */,
 				8CD247A924FA28E0008ABCE5 /* Info.plist */,
 				8CD247A624FA28E0008ABCE5 /* Szentiras.xcdatamodeld */,
 				8CD247A124FA28E0008ABCE5 /* Preview Content */,
@@ -134,6 +180,86 @@
 				8CD247BF24FA28E1008ABCE5 /* Info.plist */,
 			);
 			path = SzentirasUITests;
+			sourceTree = "<group>";
+		};
+		8CD247CD24FA2A2A008ABCE5 /* BookView */ = {
+			isa = PBXGroup;
+			children = (
+				8CD247EE24FA357F008ABCE5 /* IconButton.swift */,
+				8CD247CE24FA2A4C008ABCE5 /* BookView.swift */,
+			);
+			path = BookView;
+			sourceTree = "<group>";
+		};
+		8CD247D024FA2A66008ABCE5 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				8CD247D124FA2A7B008ABCE5 /* AppTabView.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
+		8CD247D324FA2AEE008ABCE5 /* ReadingView */ = {
+			isa = PBXGroup;
+			children = (
+				8CD247D424FA2AFF008ABCE5 /* ReadingView.swift */,
+				8CD247F424FA3AE7008ABCE5 /* ChapterView.swift */,
+				8CD247F624FA403E008ABCE5 /* ReadingViewModel.swift */,
+			);
+			path = ReadingView;
+			sourceTree = "<group>";
+		};
+		8CD247D624FA2B47008ABCE5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8CD247F224FA3AD5008ABCE5 /* Result.swift */,
+				8CD247F024FA3AAD008ABCE5 /* MockData.swift */,
+				8CD247D724FA2B65008ABCE5 /* Biblia.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8CD247D924FA2B76008ABCE5 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				8CD247DA24FA2B84008ABCE5 /* Constants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		8CD247DC24FA2B8F008ABCE5 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				8CD247DD24FA2B9B008ABCE5 /* Color+Extension.swift */,
+				8CD247E924FA2E14008ABCE5 /* Font+Extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		8CD247DF24FA2BC4008ABCE5 /* Commons */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Commons;
+			sourceTree = "<group>";
+		};
+		8CD247E024FA2DC4008ABCE5 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				8CD247E124FA2DD0008ABCE5 /* FiraSans-Bold.ttf */,
+				8CD247E324FA2DD0008ABCE5 /* FiraSans-Light.ttf */,
+				8CD247E224FA2DD0008ABCE5 /* FiraSans-Medium.ttf */,
+				8CD247E424FA2DD0008ABCE5 /* FiraSans-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		8CD247EB24FA2E70008ABCE5 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				8CD247EC24FA2E84008ABCE5 /* BibliaStore.swift */,
+			);
+			path = Store;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,7 +365,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8CD247E624FA2DD0008ABCE5 /* FiraSans-Medium.ttf in Resources */,
+				8CD247E524FA2DD0008ABCE5 /* FiraSans-Bold.ttf in Resources */,
+				8CD247E824FA2DD0008ABCE5 /* FiraSans-Regular.ttf in Resources */,
 				8CD247A324FA28E0008ABCE5 /* Preview Assets.xcassets in Resources */,
+				8CD247E724FA2DD0008ABCE5 /* FiraSans-Light.ttf in Resources */,
 				8CD247A024FA28E0008ABCE5 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,9 +396,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CD247A524FA28E0008ABCE5 /* Persistence.swift in Sources */,
+				8CD247D524FA2AFF008ABCE5 /* ReadingView.swift in Sources */,
+				8CD247EF24FA357F008ABCE5 /* IconButton.swift in Sources */,
+				8CD247ED24FA2E84008ABCE5 /* BibliaStore.swift in Sources */,
+				8CD247F124FA3AAE008ABCE5 /* MockData.swift in Sources */,
+				8CD247EA24FA2E14008ABCE5 /* Font+Extension.swift in Sources */,
+				8CD247F324FA3AD5008ABCE5 /* Result.swift in Sources */,
 				8CD247A824FA28E0008ABCE5 /* Szentiras.xcdatamodeld in Sources */,
+				8CD247F524FA3AE7008ABCE5 /* ChapterView.swift in Sources */,
 				8CD2479E24FA28DE008ABCE5 /* ContentView.swift in Sources */,
+				8CD247CF24FA2A4C008ABCE5 /* BookView.swift in Sources */,
+				8CD247DB24FA2B84008ABCE5 /* Constants.swift in Sources */,
+				8CD247D824FA2B65008ABCE5 /* Biblia.swift in Sources */,
+				8CD247D224FA2A7B008ABCE5 /* AppTabView.swift in Sources */,
+				8CD247CC24FA2A09008ABCE5 /* MainView.swift in Sources */,
+				8CD247DE24FA2B9B008ABCE5 /* Color+Extension.swift in Sources */,
 				8CD2479C24FA28DE008ABCE5 /* SzentirasApp.swift in Sources */,
+				8CD247F724FA403E008ABCE5 /* ReadingViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
