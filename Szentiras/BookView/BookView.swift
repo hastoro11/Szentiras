@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BookView: View {
-    @EnvironmentObject var store: BibliaStore
+    @EnvironmentObject var store: BibliaStore    
     @State var showTranslationSheet = false    
     @State var selectedBook: Book?
     var columns = [GridItem(.adaptive(minimum: 52, maximum: 56), spacing: 10)]
@@ -16,6 +16,8 @@ struct BookView: View {
     var body: some View {
         VStack {
             HStack {
+                IconButton(title: store.currentBook.abbreviation, icon: nil, size: 44, color: .dark)
+                IconButton(title: String(store.currenChapter), icon: nil, size: 44, color: .colorYellow)
                 Spacer()
                 Text(store.biblia.shortName)
                     .font(.medium16)
