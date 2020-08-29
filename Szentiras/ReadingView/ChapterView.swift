@@ -33,7 +33,7 @@ struct ChapterView: View {
                     if v < result.valasz.versek.count {
                         Group {
                             Text("\(v+1) ").font(viewModel.indexSize)
-                                + Text(result.valasz.versek[v].szoveg ?? "").font(viewModel.textSize)
+                                + Text(result.valasz.versek[v].szoveg?.strippedHTMLElements ?? "").font(viewModel.textSize)
                         }
                         .lineSpacing(6)
                     }
@@ -41,7 +41,7 @@ struct ChapterView: View {
             } else {
                 ForEach(1...maxNumberOfVerses, id:\.self) { v in
                     if v < result.valasz.versek.count {
-                        Text(result.valasz.versek[v].szoveg ?? "").font(viewModel.textSize).lineSpacing(6)
+                        Text(result.valasz.versek[v].szoveg?.strippedHTMLElements ?? "").font(viewModel.textSize).lineSpacing(6)
                     }
                 }
             }
@@ -50,12 +50,12 @@ struct ChapterView: View {
     
     func continousText() -> some View {
         let versek = result.valasz.versek.reduce("") { (result, vers) in
-            result + (vers.szoveg ?? "") + " "
+            result + (vers.szoveg?.strippedHTMLElements ?? "") + " "
         }
         var text = Text("")
         for index in result.valasz.versek.indices {
             text = text + Text("\(index+1) ").font(viewModel.indexSize)
-            text = text + Text(result.valasz.versek[index].szoveg ?? "").font(viewModel.textSize) + Text(" ")
+            text = text + Text(result.valasz.versek[index].szoveg?.strippedHTMLElements ?? "").font(viewModel.textSize) + Text(" ")
         }
         return Group {
             if !viewModel.showIndex {
