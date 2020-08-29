@@ -42,7 +42,12 @@ class BibliaStore: ObservableObject {
                     break
                 }
             }, receiveValue: {results in
-                self.results = results
+                self.results = results.sorted(by: {lh, rh -> Bool in
+                    let lv = Int(lh.keres.hivatkozas.split(separator: " ")[1]) ?? 0
+                    let rv = Int(rh.keres.hivatkozas.split(separator: " ")[1]) ?? 0
+                    return lv < rv
+                })
+                
             })
     }
     

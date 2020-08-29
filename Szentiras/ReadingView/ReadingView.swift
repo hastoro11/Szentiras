@@ -13,6 +13,7 @@ struct ReadingView: View {
     @State var showTranslationSheet = false
     @State var showSettings = false
     @State var hideHeader = false
+    
     var maxNumberOfVerses: Int {
         store.results.map({$0.valasz.versek.count}).max() ?? 0
     }
@@ -50,11 +51,11 @@ struct ReadingView: View {
                 if store.isLoading {
                     ProgressView("Keresés...")
                 } else {
-                    TabView {
+                    TabView(selection: $store.currentChapter) {
                         ForEach(store.results) { result in
                             ChapterView(result: result, maxNumberOfVerses: maxNumberOfVerses)
                                 .environmentObject(viewModel)
-                                .tag(result.keres.hivatkozas)
+                                .tag(chapterFromResult(result: result))
                         }
                         
                     }.tabViewStyle(PageTabViewStyle())
@@ -108,10 +109,6 @@ struct ReadingView: View {
         
     }
     
-    var popover: some View {
-        Text("ok")
-    }
-    
     var actionSheet: ActionSheet {
         let translations = Translation.allCases
         return ActionSheet(
@@ -124,7 +121,12 @@ struct ReadingView: View {
                 .default(Text(translations[3].shortName), action: {store.changeTranslation(to: translations[3])}),
                 .cancel(Text("Mégsem"))
             ])
-        
+    }
+    
+    func chapterFromResult(result: Result) -> Int {
+        let hivatkozas = result.keres.hivatkozas
+        let arr = hivatkozas.split(separator: " ")
+        return Int(arr[1]) ?? 1
     }
 }
 
