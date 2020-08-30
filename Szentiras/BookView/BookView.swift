@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct BookView: View {
-    @EnvironmentObject var store: BibliaStore    
+    @EnvironmentObject var store: BibliaStore
+    @Binding var selectedTab: Int
     @State var showTranslationSheet = false    
     @State var selectedBook: Book?
+    
     var columns = [GridItem(.adaptive(minimum: 52, maximum: 56), spacing: 10)]
     
     var body: some View {
@@ -49,7 +51,7 @@ struct BookView: View {
                 bookList(books: store.biblia.books.filter({$0.covenant == .new}))
             }
             .sheet(item: $selectedBook) { book in
-                BookChapterView(book: book)
+                BookChapterView(book: book, selectedTab: $selectedTab)
                     .environmentObject(store)
             }
             
@@ -87,7 +89,7 @@ struct BookView: View {
 
 struct BookView_Previews: PreviewProvider {
     static var previews: some View {
-        BookView()
+        BookView(selectedTab: .constant(1))
             .environmentObject(BibliaStore(biblia: .init(with: .RUF)))
     }
 }

@@ -11,6 +11,7 @@ struct BookChapterView: View {
     @EnvironmentObject var store: BibliaStore
     @Environment(\.presentationMode) var presentationMode
     var book: Book
+    @Binding var selectedTab: Int
     var columns = [GridItem(.adaptive(minimum: 52, maximum: 56), spacing: 10)]
     var body: some View {
         VStack {
@@ -23,6 +24,7 @@ struct BookChapterView: View {
                         Button(action: {
                             store.currentBook = book
                             store.currentChapter = ch
+                            selectedTab = 1
                             presentationMode.wrappedValue.dismiss()
                         }, label: {
                             IconButton(title: "\(ch)", icon: nil, size: 54, color: book.covenant == .old ? .colorGreen : .colorBlue)
@@ -37,6 +39,6 @@ struct BookChapterView: View {
 
 struct BookChapterView_Previews: PreviewProvider {
     static var previews: some View {
-        BookChapterView(book: Biblia(with: .RUF).books[40])
+        BookChapterView(book: Biblia(with: .RUF).books[40], selectedTab: .constant(1))
     }
 }

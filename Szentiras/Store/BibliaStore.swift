@@ -10,7 +10,7 @@ import Combine
 
 class BibliaStore: ObservableObject {
     @Published var biblia: Biblia
-    @Published var currentBook: Book
+    @Published var currentBook: Book 
     @Published var results: [Result] = []
     @Published var isLoading = false
     @Published var error: BibliaError?
@@ -24,15 +24,11 @@ class BibliaStore: ObservableObject {
         biblia.translation = translation
     }
     
-    func fetchBook() {
-        fetchBook(biblia: biblia)
-    }
-    
-    private func fetchBook(biblia: Biblia) {
+    private func fetchBook(biblia: Biblia, book: Book) {
         isLoading = true
         bookCancellable?.cancel()
         
-        bookCancellable = network.fetchBookResults(biblia: biblia, book: currentBook)
+        bookCancellable = network.fetchBookResults(biblia: biblia, book: book)
             .sink(receiveCompletion: { [unowned self] in
                 isLoading = false
                 switch $0 {
@@ -55,8 +51,8 @@ class BibliaStore: ObservableObject {
         self.biblia = biblia
         self.currentBook = biblia.books[40]
         $currentBook
-            .sink(receiveValue: { [unowned self]_ in
-                fetchBook()
+            .sink(receiveValue: { [unowned self] book in
+                fetchBook(biblia: self.biblia, book: book)
             })
             .store(in: &cancellables)
     }

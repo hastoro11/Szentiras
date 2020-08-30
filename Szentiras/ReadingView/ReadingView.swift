@@ -10,8 +10,10 @@ import SwiftUI
 struct ReadingView: View {
     @EnvironmentObject var store: BibliaStore
     @ObservedObject var viewModel = ReadingViewModel()
+    @Binding var selectedTab: Int
     @State var showTranslationSheet = false
     @State var showSettings = false
+    @State var selectedBook: Book?
     @State var hideHeader = false
     
     var maxNumberOfVerses: Int {
@@ -22,8 +24,21 @@ struct ReadingView: View {
             VStack {
                 if !hideHeader {
                     HStack {
-                        IconButton(title: store.currentBook.abbreviation, icon: nil, size: 44, color: .dark)
-                        IconButton(title: String(store.currentChapter), icon: nil, size: 44, color: .colorYellow)
+                        Button(action: {
+                            selectedTab = 0
+                        }, label: {
+                            IconButton(title: store.currentBook.abbreviation, icon: nil, size: 44, color: .dark)
+                        })
+                        
+                        Button(action: {
+                            selectedBook = store.currentBook
+                        }, label: {
+                            IconButton(title: String(store.currentChapter), icon: nil, size: 44, color: .colorYellow)
+                        })
+                        .sheet(item: $selectedBook) { book in
+                            BookChapterView(book: book, selectedTab: $selectedTab)
+                        }
+                        
                         Spacer()
                         Text(store.biblia.shortName)
                             .font(.medium16)
@@ -132,7 +147,7 @@ struct ReadingView: View {
 
 struct ReadingView_Previews: PreviewProvider {
     static var previews: some View {
-        ReadingView()
+        ReadingView(selectedTab: .constant(0))
             .environmentObject(BibliaStore(biblia: .init(with: .RUF)))
     }
 }

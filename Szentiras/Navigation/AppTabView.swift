@@ -11,13 +11,13 @@ struct AppTabView: View {
     @State var selectedTab = 0
     var body: some View {
         TabView(selection: $selectedTab) {
-            BookView()
+            BookView(selectedTab: $selectedTab)
                 .tabItem {
                     Image(systemName: "books.vertical")
                     Text("Könyvek")
                 }
                 .tag(0)
-            ReadingView()
+            ReadingView(selectedTab: $selectedTab)
                 .tabItem {
                     Image(systemName: "book")
                     Text("Olvasás")
