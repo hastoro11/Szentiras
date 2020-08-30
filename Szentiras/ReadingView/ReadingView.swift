@@ -23,63 +23,14 @@ struct ReadingView: View {
         ZStack(alignment: .bottom) {
             VStack {
                 if !hideHeader {
-                    HStack {
-                        Button(action: {
-                            selectedTab = 0
-                        }, label: {
-                            IconButton(title: store.currentBook.abbreviation, icon: nil, size: 44, color: .dark)
-                        })
-                        
-                        Button(action: {
-                            selectedBook = store.currentBook
-                        }, label: {
-                            IconButton(title: String(store.currentChapter), icon: nil, size: 44, color: .colorYellow)
-                        })
-                        .sheet(item: $selectedBook) { book in
-                            BookChapterView(book: book, selectedTab: $selectedTab)
-                        }
-                        
-                        Spacer()
-                        Text(store.biblia.shortName)
-                            .font(.medium16)
-                        Spacer()
-                        Button(action: {
-                            showSettings.toggle()
-                        }, label: {
-                            IconButton(icon: "textformat", size: 44, color: .colorGreen)
-                        })
-                        
-                        
-                        Button(action: {
-                            showTranslationSheet.toggle()
-                        }, label: {
-                            IconButton(icon: "bubble.left.and.bubble.right", size: 44, color: .colorRed)
-                        })
-                        .actionSheet(isPresented: $showTranslationSheet, content: {
-                            actionSheet
-                        })
-                    }
+                    Header(selectedBook: selectedBook, showTranslationSheet: $showTranslationSheet, showSettings: $showSettings, selectedTab: $selectedTab, noReadingOption: false)
                     .transition(AnyTransition.move(edge: .top).combined(with: .opacity))
-                    
                 }
                 Spacer()
                 if store.isLoading {
                     ProgressView("Keresés...")
                 } else {
-                    TabView(selection: $store.currentChapter) {
-                        ForEach(store.results) { result in
-                            ChapterView(result: result, maxNumberOfVerses: maxNumberOfVerses)
-                                .environmentObject(viewModel)
-                                .tag(chapterFromResult(result: result))
-                        }
-                        
-                    }.tabViewStyle(PageTabViewStyle())
-                    .onTapGesture {
-                        withAnimation(.spring()) {
-                            hideHeader.toggle()
-                        }
-                    }
-                    
+                    bookChapterTabview
                 }
                 Spacer()
             }
@@ -87,55 +38,62 @@ struct ReadingView: View {
             .zIndex(0)
             
             if showSettings {
-                VStack(alignment: .leading) {
-                    Spacer()
-                    HStack {
-                        Text("Betűnagyság")
-                            .font(.medium16)
-                        Slider(value: $viewModel.fontSize, in: 0...3, step: 1)
-                        .padding(.horizontal)
-                    }
-                    .padding(.bottom)
-                    HStack {
-                        Text("Versszámozás")
-                            .font(.medium16)
-                        Toggle("", isOn: $viewModel.showIndex)
-                            .padding(.horizontal)
-                    }
-                    .padding(.bottom)
-                    HStack {
-                        Text("Folyamatos olvasás")
-                            .font(.medium16)
-                        Toggle("", isOn: $viewModel.continous)
-                            .padding(.horizontal)
-                    }
-                    .padding(.bottom)
-                    Spacer()
-                }
-                .padding()
-                .frame(maxWidth: .infinity)
-                .frame(maxHeight: 200)
-                .background(Color.white.edgesIgnoringSafeArea(.bottom).shadow(radius: 5))
-                .zIndex(10)
-                .transition(.move(edge: .bottom))
-                .animation(.spring())
+                settingsView
+                    
             } // end VStack
         } // end ZStack
         
     }
     
-    var actionSheet: ActionSheet {
-        let translations = Translation.allCases
-        return ActionSheet(
-            title: Text("Válassz fordítást"),
-            message: Text(""),
-            buttons: [
-                .default(Text(translations[0].shortName), action: {store.changeTranslation(to: translations[0])}),
-                .default(Text(translations[1].shortName), action: {store.changeTranslation(to: translations[1])}),
-                .default(Text(translations[2].shortName), action: {store.changeTranslation(to: translations[2])}),
-                .default(Text(translations[3].shortName), action: {store.changeTranslation(to: translations[3])}),
-                .cancel(Text("Mégsem"))
-            ])
+    var bookChapterTabview: some View {
+        TabView(selection: $store.currentChapter) {
+            ForEach(store.results) { result in
+                ChapterView(result: result, maxNumberOfVerses: maxNumberOfVerses)
+                    .environmentObject(viewModel)
+                    .tag(chapterFromResult(result: result))
+            }
+            
+        }.tabViewStyle(PageTabViewStyle())
+        .onTapGesture {
+            withAnimation(.spring()) {
+                hideHeader.toggle()
+            }
+        }
+    }
+    
+    var settingsView: some View {
+        VStack(alignment: .leading) {
+            Spacer()
+            HStack {
+                Text("Betűnagyság")
+                    .font(.medium16)
+                Slider(value: $viewModel.fontSize, in: 0...3, step: 1)
+                .padding(.horizontal)
+            }
+            .padding(.bottom)
+            HStack {
+                Text("Versszámozás")
+                    .font(.medium16)
+                Toggle("", isOn: $viewModel.showIndex)
+                    .padding(.horizontal)
+            }
+            .padding(.bottom)
+            HStack {
+                Text("Folyamatos olvasás")
+                    .font(.medium16)
+                Toggle("", isOn: $viewModel.continous)
+                    .padding(.horizontal)
+            }
+            .padding(.bottom)
+            Spacer()
+        }
+        .padding()
+        .frame(maxWidth: .infinity)
+        .frame(maxHeight: 200)
+        .background(Color.white.edgesIgnoringSafeArea(.bottom).shadow(radius: 5))
+        .zIndex(10)
+        .transition(.move(edge: .bottom))
+        .animation(.spring())
     }
     
     func chapterFromResult(result: Result) -> Int {

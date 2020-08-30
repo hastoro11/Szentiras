@@ -17,29 +17,7 @@ struct BookView: View {
     
     var body: some View {
         VStack {
-            HStack {
-                IconButton(title: store.currentBook.abbreviation, icon: nil, size: 44, color: .dark)
-                Button(action: {
-                    selectedBook = store.currentBook
-                }, label: {
-                    IconButton(title: String(store.currentChapter), icon: nil, size: 44, color: .colorYellow)
-                })
-                
-                Spacer()
-                Text(store.biblia.shortName)
-                    .font(.medium16)
-                Spacer()
-                Color.clear
-                    .frame(width: 44, height: 44)
-                Button(action: {
-                    showTranslationSheet.toggle()
-                }, label: {
-                    IconButton(icon: "bubble.left.and.bubble.right", size: 44, color: .colorRed)
-                })
-                .actionSheet(isPresented: $showTranslationSheet, content: {
-                    actionSheet
-                })
-            }
+            Header(selectedBook: selectedBook, showTranslationSheet: $showTranslationSheet, showSettings: .constant(false), selectedTab: $selectedTab)
             ScrollView(showsIndicators: false) {
                 Text("Ószövetség")
                     .font(.light18)
@@ -57,21 +35,6 @@ struct BookView: View {
             
         }
         .padding(.horizontal)
-    }
-    
-    var actionSheet: ActionSheet {
-        let translations = Translation.allCases
-        return ActionSheet(
-            title: Text("Válassz fordítást"),
-            message: Text(""),
-            buttons: [
-                .default(Text(translations[0].shortName), action: {store.changeTranslation(to: translations[0])}),
-                .default(Text(translations[1].shortName), action: {store.changeTranslation(to: translations[1])}),
-                .default(Text(translations[2].shortName), action: {store.changeTranslation(to: translations[2])}),
-                .default(Text(translations[3].shortName), action: {store.changeTranslation(to: translations[3])}),
-                .cancel(Text("Mégsem"))
-            ])
-        
     }
     
     func bookList(books: [Book]) -> some View {

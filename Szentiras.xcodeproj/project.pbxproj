@@ -37,6 +37,8 @@
 		8CD247FC24FA6B2C008ABCE5 /* BibliaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247FB24FA6B2C008ABCE5 /* BibliaError.swift */; };
 		8CD247FE24FAB96E008ABCE5 /* BookChapterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247FD24FAB96E008ABCE5 /* BookChapterView.swift */; };
 		8CD2480024FAE782008ABCE5 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247FF24FAE781008ABCE5 /* String+Extension.swift */; };
+		8CD2480224FBEB41008ABCE5 /* ActionSheet+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2480124FBEB41008ABCE5 /* ActionSheet+Extension.swift */; };
+		8CD2480424FBEBE9008ABCE5 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2480324FBEBE9008ABCE5 /* Header.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +95,8 @@
 		8CD247FB24FA6B2C008ABCE5 /* BibliaError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BibliaError.swift; sourceTree = "<group>"; };
 		8CD247FD24FAB96E008ABCE5 /* BookChapterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookChapterView.swift; sourceTree = "<group>"; };
 		8CD247FF24FAE781008ABCE5 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		8CD2480124FBEB41008ABCE5 /* ActionSheet+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActionSheet+Extension.swift"; sourceTree = "<group>"; };
+		8CD2480324FBEBE9008ABCE5 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -243,6 +247,7 @@
 				8CD247FF24FAE781008ABCE5 /* String+Extension.swift */,
 				8CD247DD24FA2B9B008ABCE5 /* Color+Extension.swift */,
 				8CD247E924FA2E14008ABCE5 /* Font+Extension.swift */,
+				8CD2480124FBEB41008ABCE5 /* ActionSheet+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -250,6 +255,7 @@
 		8CD247DF24FA2BC4008ABCE5 /* Commons */ = {
 			isa = PBXGroup;
 			children = (
+				8CD2480324FBEBE9008ABCE5 /* Header.swift */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -431,11 +437,13 @@
 				8CD2479E24FA28DE008ABCE5 /* ContentView.swift in Sources */,
 				8CD247CF24FA2A4C008ABCE5 /* BookView.swift in Sources */,
 				8CD247DB24FA2B84008ABCE5 /* Constants.swift in Sources */,
+				8CD2480424FBEBE9008ABCE5 /* Header.swift in Sources */,
 				8CD247D824FA2B65008ABCE5 /* Biblia.swift in Sources */,
 				8CD247D224FA2A7B008ABCE5 /* AppTabView.swift in Sources */,
 				8CD247CC24FA2A09008ABCE5 /* MainView.swift in Sources */,
 				8CD247DE24FA2B9B008ABCE5 /* Color+Extension.swift in Sources */,
 				8CD2479C24FA28DE008ABCE5 /* SzentirasApp.swift in Sources */,
+				8CD2480224FBEB41008ABCE5 /* ActionSheet+Extension.swift in Sources */,
 				8CD247F724FA403E008ABCE5 /* ReadingViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
