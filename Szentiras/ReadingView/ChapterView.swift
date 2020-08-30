@@ -10,10 +10,24 @@ import SwiftUI
 struct ChapterView: View {
     var result: Result
     @EnvironmentObject var viewModel: ReadingViewModel
+    @EnvironmentObject var store: BibliaStore
     var maxNumberOfVerses: Int
+    var bookTitle: String {
+        let abbr = result.keres.hivatkozas.split(separator: " ")[0]
+        let book = store.biblia.books.first(where: {$0.abbreviation == abbr})
+        return book?.name ?? ""
+    }
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 6) {
+                VStack {
+                    Text(bookTitle)
+                        .font(.bold26)
+                        .multilineTextAlignment(.center)
+                    Text("\(store.currentChapter). fejezet")
+                        .font(.medium22)
+                }
+                .frame(maxWidth: .infinity, alignment: .center)
                 if viewModel.continous {
                     continousText()
                 }

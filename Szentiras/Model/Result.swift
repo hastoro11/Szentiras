@@ -12,8 +12,6 @@ import Foundation
 //
 //   let result = try? newJSONDecoder().decode(Result.self, from: jsonData)
 
-import Foundation
-
 // MARK: - Result
 struct Result: Codable {
     let keres: Keres
