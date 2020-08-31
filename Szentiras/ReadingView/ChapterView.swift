@@ -35,8 +35,9 @@ struct ChapterView: View {
                 if !viewModel.continous {
                     notContinuous()
                 }
-            }
+            }            
         }
+        
     }
     
     @ViewBuilder

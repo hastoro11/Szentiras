@@ -10,8 +10,6 @@ import Combine
 
 class NetworkLayer: ObservableObject {
     
-    var baseUrlString = "https://szentiras.hu/api/idezet/"
-    
     func fetchBookResults(biblia: Biblia, book: Book) -> AnyPublisher<[Result], BibliaError> {
         let publishers = (1...book.chapters).map({ ch -> AnyPublisher<Result, BibliaError> in
             fetchChapterResult(biblia: biblia, book: book, chapter: ch)

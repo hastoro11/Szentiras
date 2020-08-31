@@ -17,9 +17,11 @@ enum BibliaError: Error, CustomStringConvertible, Identifiable {
     var description: String {
         switch self {
         case .network:
-            return "Hálózati hiba"
+            return "Hálózati hiba, talán a készülék nem csatlakozik az internethez."
+        case .parsing:
+            return "Fordítási hiba, ha lehetőség van rá, értesítse a program készítőjét."
         default:
-            return "Ismeretlen hiba"
+            return "Ismeretlen hiba lépett fel. Ha lehetőség van rá, értesítse a program készítőjét."
         }
     }
 }

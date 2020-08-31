@@ -37,12 +37,15 @@ struct ReadingView: View {
             .padding(.horizontal)
             .zIndex(0)
             
+            
             if showSettings {
                 settingsView
                     
             } // end VStack
         } // end ZStack
-        
+        .alert(item: $store.error) { (error) -> Alert in
+            Alert(title: Text("Hiba"), message: Text(error.description), dismissButton: .default(Text("OK")))
+        }
     }
     
     var bookChapterTabview: some View {
