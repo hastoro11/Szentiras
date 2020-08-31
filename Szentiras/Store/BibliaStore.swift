@@ -21,10 +21,22 @@ class BibliaStore: ObservableObject {
     var network = NetworkLayer()
     
     func changeTranslation(to translation: Translation) {
-        biblia.translation = translation
+        if (biblia.translation == .KNB || biblia.translation == .SZIT) && (translation == .KG || translation == .RUF) {
+            biblia.translation = translation
+            currentBook = biblia.books[0]
+        } else {
+            biblia.translation = translation
+        }
+        currentChapter = min(currentChapter, currentBook.chapters)        
     }
     
-    private func fetchBook(biblia: Biblia, book: Book) {
+    func changeTranslationWhileReading(to translation: Translation) {
+        biblia.translation = translation
+        currentChapter = min(currentChapter, currentBook.chapters)
+        fetchBook(book: currentBook)
+    }
+    
+    func fetchBook(book: Book) {
         isLoading = true
         bookCancellable?.cancel()
         
@@ -52,7 +64,7 @@ class BibliaStore: ObservableObject {
         self.currentBook = biblia.books[40]
         $currentBook
             .sink(receiveValue: { [unowned self] book in
-                fetchBook(biblia: self.biblia, book: book)
+                fetchBook(book: book)
             })
             .store(in: &cancellables)
     }

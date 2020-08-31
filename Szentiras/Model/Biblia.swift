@@ -312,7 +312,8 @@ struct Book: Codable, Equatable, Identifiable {
     var abbreviation: String
     var chapters: Int
     
-//    func isCatholicBook() -> Bool {
-//        return self == Biblia.catholicBooks[16] || self == Biblia.catholicBooks[17] || self == Biblia.catholicBooks[24] || self == Biblia.catholicBooks[25] || self == Biblia.catholicBooks[29] || self == Biblia.catholicBooks[44] || self == Biblia.catholicBooks[45]
-//    }
+    func isCatholicBook() -> Bool {
+        return self.shortName == "Tóbiás" || self.shortName == "Judit" || self.shortName == "Bölcsesség" || self.shortName == "Sirák" || self.shortName == "Báruk" || self.shortName == "1Makk" || self.shortName == "2Makk"
+
+    }
 }

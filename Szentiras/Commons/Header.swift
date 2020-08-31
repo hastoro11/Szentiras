@@ -14,6 +14,7 @@ struct Header: View {
     @Binding var showSettings: Bool
     @Binding var selectedTab: Int
     var noReadingOption: Bool = true
+    var readingView: Bool
     var body: some View {
         HStack {
             Button(action: {
@@ -45,7 +46,7 @@ struct Header: View {
                 IconButton(icon: "bubble.left.and.bubble.right", size: 44, color: .colorRed)
             })
             .actionSheet(isPresented: $showTranslationSheet, content: {
-                ActionSheet.translationActionSheet(store: store)
+                ActionSheet.translationActionSheet(store: store, book: store.currentBook, readingView: readingView)
             })
         }
     }

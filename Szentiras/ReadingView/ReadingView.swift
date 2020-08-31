@@ -23,7 +23,7 @@ struct ReadingView: View {
         ZStack(alignment: .bottom) {
             VStack {
                 if !hideHeader {
-                    Header(selectedBook: selectedBook, showTranslationSheet: $showTranslationSheet, showSettings: $showSettings, selectedTab: $selectedTab, noReadingOption: false)
+                    Header(selectedBook: selectedBook, showTranslationSheet: $showTranslationSheet, showSettings: $showSettings, selectedTab: $selectedTab, noReadingOption: false, readingView: true)
                     .transition(AnyTransition.move(edge: .top).combined(with: .opacity))
                 }
                 Spacer()
@@ -45,6 +45,10 @@ struct ReadingView: View {
         } // end ZStack
         .alert(item: $store.error) { (error) -> Alert in
             Alert(title: Text("Hiba"), message: Text(error.description), dismissButton: .default(Text("OK")))
+        }
+        
+        .onAppear {
+            store.fetchBook(book: store.currentBook)
         }
     }
     

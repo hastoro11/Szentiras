@@ -17,7 +17,7 @@ struct BookView: View {
     
     var body: some View {
         VStack {
-            Header(selectedBook: selectedBook, showTranslationSheet: $showTranslationSheet, showSettings: .constant(false), selectedTab: $selectedTab)
+            Header(selectedBook: selectedBook, showTranslationSheet: $showTranslationSheet, showSettings: .constant(false), selectedTab: $selectedTab, readingView: false)
             ScrollView(showsIndicators: false) {
                 Text("Ószövetség")
                     .font(.light18)
