@@ -8,10 +8,15 @@
 import SwiftUI
 
 struct MainView: View {
-    @ObservedObject var store = BibliaStore(biblia: .init(with: .RUF))
+    @ObservedObject var store: BibliaStore
     var body: some View {
         AppTabView()
             .environmentObject(store)
+    }
+    
+    init() {
+        let translationRawValue = UserDefaults.standard.object(forKey: "translation") as? String ?? "RUF"
+        store = BibliaStore(translation: Translation(rawValue: translationRawValue) ?? .RUF)
     }
 }
 

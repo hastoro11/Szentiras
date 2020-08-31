@@ -11,7 +11,6 @@ extension ActionSheet {
     static func translationActionSheet(store: BibliaStore, book: Book, readingView: Bool) -> ActionSheet {
         let translations = Translation.allCases
         func buttons() -> [ActionSheet.Button] {
-            
             if readingView {
                 if book.isCatholicBook() {
                     return [
@@ -38,6 +37,7 @@ extension ActionSheet {
                 ]
             }
         }
+        
         return ActionSheet(
             title: Text("Válassz fordítást"),
             message: Text(""),

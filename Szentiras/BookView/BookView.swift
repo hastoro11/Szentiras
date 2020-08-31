@@ -31,10 +31,12 @@ struct BookView: View {
             .sheet(item: $selectedBook) { book in
                 BookChapterView(book: book, selectedTab: $selectedTab)
                     .environmentObject(store)
-            }
-            
+            }            
         }
         .padding(.horizontal)
+        .onAppear {
+            print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0])
+        }
     }
     
     func bookList(books: [Book]) -> some View {
@@ -53,6 +55,6 @@ struct BookView: View {
 struct BookView_Previews: PreviewProvider {
     static var previews: some View {
         BookView(selectedTab: .constant(1))
-            .environmentObject(BibliaStore(biblia: .init(with: .RUF)))
+            .environmentObject(BibliaStore(translation: .RUF))
     }
 }

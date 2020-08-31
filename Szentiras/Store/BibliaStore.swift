@@ -6,15 +6,24 @@
 //
 
 import Foundation
+import SwiftUI
 import Combine
 
 class BibliaStore: ObservableObject {
     @Published var biblia: Biblia
-    @Published var currentBook: Book 
+    @Published var currentBook: Book {
+        didSet {
+            saveUserDefaults()
+        }
+    }
     @Published var results: [Result] = []
     @Published var isLoading = false
     @Published var error: BibliaError?
-    @Published var currentChapter: Int = 1
+    @Published var currentChapter: Int {
+        didSet {
+            saveUserDefaults()
+        }
+    }
     
     var bookCancellable: Cancellable?
     var cancellables = Set<AnyCancellable>()
@@ -27,13 +36,22 @@ class BibliaStore: ObservableObject {
         } else {
             biblia.translation = translation
         }
-        currentChapter = min(currentChapter, currentBook.chapters)        
+        currentChapter = min(currentChapter, currentBook.chapters)
+        saveUserDefaults()
     }
     
     func changeTranslationWhileReading(to translation: Translation) {
         biblia.translation = translation
         currentChapter = min(currentChapter, currentBook.chapters)
         fetchBook(book: currentBook)
+        saveUserDefaults()
+    }
+    
+    private func saveUserDefaults() {
+        UserDefaults.standard.set(biblia.translation.rawValue, forKey: "translation")
+        let currentBookIndex = biblia.books.firstIndex(of: currentBook) ?? 0
+        UserDefaults.standard.set(currentChapter, forKey: "currentChapter")
+        UserDefaults.standard.set(currentBookIndex, forKey: "currentBookIndex")
     }
     
     func fetchBook(book: Book) {
@@ -59,13 +77,17 @@ class BibliaStore: ObservableObject {
             })
     }
     
-    init(biblia: Biblia) {
+    init(translation: Translation) {
+        let biblia = Biblia(with: translation)
         self.biblia = biblia
-        self.currentBook = biblia.books[40]
+        let currentBookIndex = UserDefaults.standard.integer(forKey: "currentBookIndex")
+        self.currentBook = biblia.books[currentBookIndex]
+        self.currentChapter = max(UserDefaults.standard.integer(forKey: "currentChapter"), 1)
         $currentBook
             .sink(receiveValue: { [unowned self] book in
                 fetchBook(book: book)
             })
             .store(in: &cancellables)
     }
+    
 }

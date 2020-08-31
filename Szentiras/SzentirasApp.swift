@@ -10,7 +10,6 @@ import SwiftUI
 @main
 struct SzentirasApp: App {
     let persistenceController = PersistenceController.shared
-
     var body: some Scene {
         WindowGroup {
             MainView()

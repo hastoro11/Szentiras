@@ -113,6 +113,6 @@ struct ReadingView: View {
 struct ReadingView_Previews: PreviewProvider {
     static var previews: some View {
         ReadingView(selectedTab: .constant(0))
-            .environmentObject(BibliaStore(biblia: .init(with: .RUF)))
+            .environmentObject(BibliaStore(translation: .RUF))
     }
 }
