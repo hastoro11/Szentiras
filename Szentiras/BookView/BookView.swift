@@ -9,6 +9,9 @@ import SwiftUI
 
 struct BookView: View {
     @EnvironmentObject var store: BibliaStore
+    var books: [Book] {
+        store.booksResult?.books ?? []
+    }
     @Binding var selectedTab: Int
     @State var showTranslationSheet = false    
     @State var selectedBook: Book?
@@ -18,20 +21,25 @@ struct BookView: View {
     var body: some View {
         VStack {
             Header(selectedBook: selectedBook, showTranslationSheet: $showTranslationSheet, showSettings: .constant(false), selectedTab: $selectedTab, readingView: false)
-            ScrollView(showsIndicators: false) {
-                Text("Ószövetség")
-                    .font(.light18)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                bookList(books: store.biblia.books.filter({$0.covenant == .old}))
-                Text("Újszövetség")
-                    .font(.light18)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                bookList(books: store.biblia.books.filter({$0.covenant == .new}))
+            if store.isLoading {
+                ProgressView("Keresés...")
+            } else {
+                ScrollView(showsIndicators: false) {
+                    Text("Ószövetség")
+                        .font(.light18)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    bookList(books: books.filter({$0.number < 200}))
+                    Text("Újszövetség")
+                        .font(.light18)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    bookList(books: books.filter({$0.number > 200}))
+                }
+                .sheet(item: $selectedBook) { book in
+                    BookChapterView(book: book, selectedTab: $selectedTab)
+                        .environmentObject(store)
+                }
             }
-            .sheet(item: $selectedBook) { book in
-                BookChapterView(book: book, selectedTab: $selectedTab)
-                    .environmentObject(store)
-            }            
+                       
         }
         .padding(.horizontal)
         .onAppear {
@@ -45,7 +53,7 @@ struct BookView: View {
                 Button(action: {
                     selectedBook = book
                 }) {
-                    IconButton(title: book.abbreviation, size: 54, color: book.covenant == .old ? .colorGreen : .colorBlue)
+                    IconButton(title: book.abbrev, size: 54, color: book.number < 200 ? .colorGreen : .colorBlue)
                 }
             }
         }
@@ -55,6 +63,6 @@ struct BookView: View {
 struct BookView_Previews: PreviewProvider {
     static var previews: some View {
         BookView(selectedTab: .constant(1))
-            .environmentObject(BibliaStore(translation: .RUF))
+//            .environmentObject(BibliaStore(translation: .RUF))
     }
 }

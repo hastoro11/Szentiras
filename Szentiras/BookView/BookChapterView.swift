@@ -20,10 +20,10 @@ struct BookChapterView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             ScrollView(showsIndicators: false) {
                 LazyVGrid(columns: columns, spacing: 10) {
-                    ForEach(1...book.chapters, id:\.self) { ch in
+                    ForEach(1...1/*book.chapters*/, id:\.self) { ch in
                         Button(action: {
-                            store.currentBook = book
-                            store.currentChapter = ch
+//                            store.currentBook = book
+//                            store.currentChapter = ch
                             selectedTab = 1
                             presentationMode.wrappedValue.dismiss()
                         }, label: {
@@ -36,9 +36,9 @@ struct BookChapterView: View {
         }.padding()
     }
 }
-
-struct BookChapterView_Previews: PreviewProvider {
-    static var previews: some View {
-        BookChapterView(book: Biblia(with: .RUF).books[40], selectedTab: .constant(1))
-    }
-}
+//
+//struct BookChapterView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        BookChapterView(book: Biblia(with: .RUF).books[40], selectedTab: .constant(1))
+//    }
+//}

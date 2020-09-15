@@ -8,86 +8,39 @@
 import Foundation
 import SwiftUI
 import Combine
+import CoreData
 
 class BibliaStore: ObservableObject {
-    @Published var biblia: Biblia
-    @Published var currentBook: Book {
-        didSet {
-            saveUserDefaults()
-        }
-    }
-    @Published var results: [Result] = []
-    @Published var isLoading = false
+    var context: NSManagedObjectContext
+    @Published var isLoading: Bool = false
     @Published var error: BibliaError?
-    @Published var currentChapter: Int {
-        didSet {
-            saveUserDefaults()
-        }
-    }
-    
-    var bookCancellable: Cancellable?
     var cancellables = Set<AnyCancellable>()
-    var network = NetworkLayer()
     
-    func changeTranslation(to translation: Translation) {
-        if (biblia.translation == .KNB || biblia.translation == .SZIT) && (translation == .KG || translation == .RUF) {
-            biblia.translation = translation
-            currentBook = biblia.books[0]
-        } else {
-            biblia.translation = translation
-        }
-        currentChapter = min(currentChapter, currentBook.chapters)
-        saveUserDefaults()
+    @Published var translation: Translation
+    @Published var booksResult: BooksResult?
+    
+    init(context: NSManagedObjectContext) {
+        self.context = context
+        translation = .RUF
+        $translation
+            .sink(receiveValue: fetchAllBooksFromNetwork(translation:))
+            .store(in: &cancellables)
+            
     }
     
-    func changeTranslationWhileReading(to translation: Translation) {
-        biblia.translation = translation
-        currentChapter = min(currentChapter, currentBook.chapters)
-        fetchBook(book: currentBook)
-        saveUserDefaults()
-    }
-    
-    private func saveUserDefaults() {
-        UserDefaults.standard.set(biblia.translation.rawValue, forKey: "translation")
-        let currentBookIndex = biblia.books.firstIndex(of: currentBook) ?? 0
-        UserDefaults.standard.set(currentChapter, forKey: "currentChapter")
-        UserDefaults.standard.set(currentBookIndex, forKey: "currentBookIndex")
-    }
-    
-    func fetchBook(book: Book) {
+    func fetchAllBooksFromNetwork(translation: Translation) {
         isLoading = true
-        bookCancellable?.cancel()
-        
-        bookCancellable = network.fetchBookResults(biblia: biblia, book: book)
-            .sink(receiveCompletion: { [unowned self] in
+        NetworkLayer.fetchAllBooksFromNetwork(translation: translation)
+            .receive(on: RunLoop.main)
+            .sink(receiveCompletion: { [unowned self]completion in
                 isLoading = false
-                switch $0 {
+                switch completion {
                 case .failure(let error):
                     self.error = error
                 default:
                     break
                 }
-            }, receiveValue: {results in
-                self.results = results.sorted(by: {lh, rh -> Bool in
-                    let lv = Int(lh.keres.hivatkozas.split(separator: " ")[1]) ?? 0
-                    let rv = Int(rh.keres.hivatkozas.split(separator: " ")[1]) ?? 0
-                    return lv < rv
-                })
-                
-            })
-    }
-    
-    init(translation: Translation) {
-        let biblia = Biblia(with: translation)
-        self.biblia = biblia
-        let currentBookIndex = UserDefaults.standard.integer(forKey: "currentBookIndex")
-        self.currentBook = biblia.books[currentBookIndex]
-        self.currentChapter = max(UserDefaults.standard.integer(forKey: "currentChapter"), 1)
-        $currentBook
-            .sink(receiveValue: { [unowned self] book in
-                fetchBook(book: book)
-            })
+            }, receiveValue: { self.booksResult = $0 })
             .store(in: &cancellables)
     }
-    
 }

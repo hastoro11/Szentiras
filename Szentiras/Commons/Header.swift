@@ -16,38 +16,39 @@ struct Header: View {
     var noReadingOption: Bool = true
     var readingView: Bool
     var body: some View {
-        HStack {
-            Button(action: {
-                selectedTab = 0
-            }, label: {
-                IconButton(title: store.currentBook.abbreviation, icon: nil, size: 44, color: .dark)
-            })
-            Button(action: {
-                selectedBook = store.currentBook
-            }, label: {
-                IconButton(title: String(store.currentChapter), icon: nil, size: 44, color: .colorYellow)
-            })
-            .sheet(item: $selectedBook) { book in
-                BookChapterView(book: book, selectedTab: $selectedTab)
-            }
-            Spacer()
-            Text(store.biblia.shortName)
-                .font(.medium16)
-            Spacer()
-            Button(action: {
-                showSettings.toggle()
-            }, label: {
-                IconButton(icon: "textformat", size: 44, color: .colorGreen)
-            })
-            .opacity(noReadingOption ? 0.0 : 1.0)
-            Button(action: {
-                showTranslationSheet.toggle()
-            }, label: {
-                IconButton(icon: "bubble.left.and.bubble.right", size: 44, color: .colorRed)
-            })
-            .actionSheet(isPresented: $showTranslationSheet, content: {
-                ActionSheet.translationActionSheet(store: store, book: store.currentBook, readingView: readingView)
-            })
-        }
+        Text("")
+//        HStack {
+//            Button(action: {
+//                selectedTab = 0
+//            }, label: {
+//                IconButton(title: store.currentBook.abbreviation, icon: nil, size: 44, color: .dark)
+//            })
+//            Button(action: {
+//                selectedBook = store.currentBook
+//            }, label: {
+//                IconButton(title: String(store.currentChapter), icon: nil, size: 44, color: .colorYellow)
+//            })
+//            .sheet(item: $selectedBook) { book in
+//                BookChapterView(book: book, selectedTab: $selectedTab)
+//            }
+//            Spacer()
+//            Text(store.biblia.shortName)
+//                .font(.medium16)
+//            Spacer()
+//            Button(action: {
+//                showSettings.toggle()
+//            }, label: {
+//                IconButton(icon: "textformat", size: 44, color: .colorGreen)
+//            })
+//            .opacity(noReadingOption ? 0.0 : 1.0)
+//            Button(action: {
+//                showTranslationSheet.toggle()
+//            }, label: {
+//                IconButton(icon: "bubble.left.and.bubble.right", size: 44, color: .colorRed)
+//            })
+//            .actionSheet(isPresented: $showTranslationSheet, content: {
+//                ActionSheet.translationActionSheet(store: store, book: store.currentBook, readingView: readingView)
+//            })
+//        }
     }
 }

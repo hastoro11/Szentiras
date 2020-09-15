@@ -7,17 +7,11 @@
 
 import SwiftUI
 
-struct MainView: View {
-    @ObservedObject var store: BibliaStore
+struct MainView: View {    
     var body: some View {
         AppTabView()
-            .environmentObject(store)
-    }
-    
-    init() {
-        let translationRawValue = UserDefaults.standard.object(forKey: "translation") as? String ?? "RUF"
-        store = BibliaStore(translation: Translation(rawValue: translationRawValue) ?? .RUF)
-    }
+            
+    }    
 }
 
 struct MainView_Previews: PreviewProvider {

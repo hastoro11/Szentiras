@@ -37,8 +37,9 @@ struct IconButton: View {
     }
 }
 
-//struct IconButton_Previews: PreviewProvider {
-//    static var previews: some View {
-//        IconButton()
-//    }
-//}
+
+struct IconButton_Previews: PreviewProvider {
+    static var previews: some View {
+        IconButton(title: "1Móz", icon: nil, size: 54, color: .green)
+    }
+}
