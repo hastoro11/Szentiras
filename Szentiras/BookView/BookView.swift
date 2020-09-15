@@ -32,8 +32,8 @@ struct BookView: View {
                     bookList(books: store.allBooks.filter({$0.number > 200}))
                 }
                 .sheet(item: $selectedBook) { book in
-//                    BookChapterView(book: book, selectedTab: $selectedTab)
-//                        .environmentObject(store)
+                    BookChapterView(book: book, selectedTab: $selectedTab)
+                        .environmentObject(store)
                 }
             }
                        
