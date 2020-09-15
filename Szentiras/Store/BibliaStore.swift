@@ -16,16 +16,33 @@ class BibliaStore: ObservableObject {
     @Published var error: BibliaError?
     var cancellables = Set<AnyCancellable>()
     
-    @Published var translation: Translation
-    @Published var booksResult: BooksResult?
+    @Published var translation: Translation    
+    @Published var allBooks: [CDBook] = []
+    
+    @Published var currentBook: CDBook?
     
     init(context: NSManagedObjectContext) {
         self.context = context
         translation = .RUF
         $translation
-            .sink(receiveValue: fetchAllBooksFromNetwork(translation:))
+            .sink(receiveValue: fetchAllBooksFromDatabase(translation:))
             .store(in: &cancellables)
             
+    }
+    
+    func changeTranslation(to translation: Translation) {
+        self.translation = translation
+    }
+    
+    func fetchAllBooksFromDatabase(translation: Translation) {
+        let request = CDBook.fetchRequest(predicate: NSPredicate(format: "translation_ = %@", translation.rawValue))
+        let books = (try? context.fetch(request)) ?? []
+        if books.isEmpty {
+            fetchAllBooksFromNetwork(translation: translation)
+        } else {
+            self.allBooks = books
+        }
+        
     }
     
     func fetchAllBooksFromNetwork(translation: Translation) {
@@ -40,7 +57,11 @@ class BibliaStore: ObservableObject {
                 default:
                     break
                 }
-            }, receiveValue: { self.booksResult = $0 })
+            }, receiveValue: { [self] in
+                CDBook.saveBooksResult(booksResult:$0, context: context)
+                fetchAllBooksFromDatabase(translation: translation)
+            })
             .store(in: &cancellables)
     }
+    
 }
