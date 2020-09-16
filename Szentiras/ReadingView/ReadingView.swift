@@ -13,61 +13,55 @@ struct ReadingView: View {
     @Binding var selectedTab: Int
     @State var showTranslationSheet = false
     @State var showSettings = false
-//    @State var selectedBook: Book?
+    @State var selectedBook: CDBook?
     @State var hideHeader = false
     
-//    var maxNumberOfVerses: Int {
-//        store.results.map({$0.valasz.versek.count}).max() ?? 0
-//    }
-    var body: some View {
-        Text("")
-//        ZStack(alignment: .bottom) {
-//            VStack {
-//                if !hideHeader {
-//                    Header(selectedBook: selectedBook, showTranslationSheet: $showTranslationSheet, showSettings: $showSettings, selectedTab: $selectedTab, noReadingOption: false, readingView: true)
-//                    .transition(AnyTransition.move(edge: .top).combined(with: .opacity))
-//                }
-//                Spacer()
-//                if store.isLoading {
-//                    ProgressView("Keresés...")
-//                } else {
-//                    bookChapterTabview
-//                }
-//                Spacer()
-//            }
-//            .padding(.horizontal)
-//            .zIndex(0)
-//
-//
-//            if showSettings {
-//                settingsView
-//
-//            } // end VStack
-//        } // end ZStack
-//        .alert(item: $store.error) { (error) -> Alert in
-//            Alert(title: Text("Hiba"), message: Text(error.description), dismissButton: .default(Text("OK")))
-//        }
-//
-//        .onAppear {
-//            store.fetchBook(book: store.currentBook)
-//        }
+    var body: some View {        
+        ZStack(alignment: .bottom) {
+            VStack {
+                if !hideHeader {
+                    Header(selectedBook: selectedBook, showTranslationSheet: $showTranslationSheet, showSettings: $showSettings, selectedTab: $selectedTab, noReadingOption: false, readingView: true)
+                    .transition(AnyTransition.move(edge: .top).combined(with: .opacity))
+                }
+                Spacer()
+                if store.isLoading {
+                    ProgressView("Keresés...")
+                } else {
+                    bookChapterTabview
+                }
+                Spacer()
+            }
+            .padding(.horizontal)
+            .zIndex(0)
+
+
+            if showSettings {
+                settingsView
+
+            } // end VStack
+        } // end ZStack
+        .alert(item: $store.error) { (error) -> Alert in
+            Alert(title: Text("Hiba"), message: Text(error.description), dismissButton: .default(Text("OK")))
+        }
+
     }
-//    
-//    var bookChapterTabview: some View {
-//        TabView(selection: $store.currentChapter) {
-//            ForEach(store.results) { result in
-//                ChapterView(result: result, maxNumberOfVerses: maxNumberOfVerses)
-//                    .environmentObject(viewModel)
-//                    .tag(chapterFromResult(result: result))
-//            }
-//            
-//        }.tabViewStyle(PageTabViewStyle())
-//        .onTapGesture {
-//            withAnimation(.spring()) {
-//                hideHeader.toggle()
-//            }
-//        }
-//    }
+    
+    var bookChapterTabview: some View {
+        let numberOfChaptersInCurrentBook = bookChapters[store.currentBook!.number, default: 1]
+        return TabView(selection: $store.currentChapter) {
+            ForEach(1...numberOfChaptersInCurrentBook, id:\.self) { chapter in
+                ChapterView(verses: store.allVersesInABook.filter({$0.chapter == chapter}))
+                    .tag(chapter)
+                    .environmentObject(viewModel)
+            }
+        }
+        .tabViewStyle(PageTabViewStyle())
+        .onTapGesture {
+            withAnimation(.spring()) {
+                hideHeader.toggle()
+            }
+        }
+    }
     
     var settingsView: some View {
         VStack(alignment: .leading) {

@@ -41,6 +41,7 @@
 		8CD2480024FAE782008ABCE5 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247FF24FAE781008ABCE5 /* String+Extension.swift */; };
 		8CD2480224FBEB41008ABCE5 /* ActionSheet+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2480124FBEB41008ABCE5 /* ActionSheet+Extension.swift */; };
 		8CD2480424FBEBE9008ABCE5 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2480324FBEBE9008ABCE5 /* Header.swift */; };
+		8CE164D32511DDE600EE0DE6 /* CDVers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE164D22511DDE600EE0DE6 /* CDVers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +102,7 @@
 		8CD247FF24FAE781008ABCE5 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		8CD2480124FBEB41008ABCE5 /* ActionSheet+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActionSheet+Extension.swift"; sourceTree = "<group>"; };
 		8CD2480324FBEBE9008ABCE5 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
+		8CE164D22511DDE600EE0DE6 /* CDVers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDVers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,6 +238,7 @@
 				8CD247D724FA2B65008ABCE5 /* Biblia.swift */,
 				8C3634ED25108EC700D4BF82 /* Common.swift */,
 				8C3634EF25109BB000D4BF82 /* CDBook.swift */,
+				8CE164D22511DDE600EE0DE6 /* CDVers.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -439,6 +442,7 @@
 				8CD247F324FA3AD5008ABCE5 /* Result.swift in Sources */,
 				8CD247A824FA28E0008ABCE5 /* Szentiras.xcdatamodeld in Sources */,
 				8CD247F524FA3AE7008ABCE5 /* ChapterView.swift in Sources */,
+				8CE164D32511DDE600EE0DE6 /* CDVers.swift in Sources */,
 				8CD2480024FAE782008ABCE5 /* String+Extension.swift in Sources */,
 				8CD2479E24FA28DE008ABCE5 /* ContentView.swift in Sources */,
 				8CD247CF24FA2A4C008ABCE5 /* BookView.swift in Sources */,

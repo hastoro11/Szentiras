@@ -20,15 +20,15 @@ struct Header: View {
             Button(action: {
                 selectedTab = 0
             }, label: {
-//                IconButton(title: store.currentBook.abbreviation, icon: nil, size: 44, color: .dark)
+                IconButton(title: store.currentBook?.abbrev, icon: nil, size: 44, color: .dark)
             })
             Button(action: {
 //                selectedBook = store.currentBook
             }, label: {
-//                IconButton(title: String(store.currentChapter), icon: nil, size: 44, color: .colorYellow)
+                IconButton(title: String(store.currentChapter), icon: nil, size: 44, color: .colorYellow)
             })
             .sheet(item: $selectedBook) { book in
-//                BookChapterView(book: book, selectedTab: $selectedTab)
+                BookChapterView(book: book, selectedTab: $selectedTab)
             }
             Spacer()
             Text(store.translation.shortName)
