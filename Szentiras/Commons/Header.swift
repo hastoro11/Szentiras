@@ -23,10 +23,11 @@ struct Header: View {
                 IconButton(title: store.currentBook?.abbrev, icon: nil, size: 44, color: .dark)
             })
             Button(action: {
-//                selectedBook = store.currentBook
+                selectedBook = store.currentBook
             }, label: {
                 IconButton(title: String(store.currentChapter), icon: nil, size: 44, color: .colorYellow)
             })
+            .opacity(readingView ? 1 : 0)
             .sheet(item: $selectedBook) { book in
                 BookChapterView(book: book, selectedTab: $selectedTab)
             }

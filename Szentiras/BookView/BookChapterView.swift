@@ -25,8 +25,8 @@ struct BookChapterView: View {
                 LazyVGrid(columns: columns, spacing: 10) {
                     ForEach(1...chapterNumbers, id:\.self) { ch in
                         Button(action: {
-//                            store.currentBook = book
-//                            store.currentChapter = ch
+                            store.currentBook = book
+                            store.currentChapter = ch
                             selectedTab = 1
                             presentationMode.wrappedValue.dismiss()
                         }, label: {
