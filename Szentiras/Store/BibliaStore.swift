@@ -17,18 +17,23 @@ class BibliaStore: ObservableObject {
     var cancellables = Set<AnyCancellable>()
     var userDefaultsManager: UserDefaultManager
     
-    @Published var translation: Translation    
+    @Published var translation: Translation {
+        willSet {
+            userDefaultsManager.setTranslationValue(newValue, forKey: .translation)
+        }
+    }
+    
     @Published var allBooks: [CDBook] = []
     @Published var allVersesInABook: [CDVers] = []
     
     @Published var currentBook: CDBook? {
         willSet {
-            userDefaultsManager.setValue(newValue!.number, forKey: .currentBook)
+            userDefaultsManager.setIntValue(newValue!.number, forKey: .currentBook)
         }
     }
     @Published var currentChapter: Int {
         willSet {
-            userDefaultsManager.setValue(newValue, forKey: .currentChapter)
+            userDefaultsManager.setIntValue(newValue, forKey: .currentChapter)
         }
     }
     
@@ -39,10 +44,9 @@ class BibliaStore: ObservableObject {
         userDefaultsManager = UserDefaultManager()
         
         self.context = context
-        // Init data
-        // TODO: UserDefaults
-        translation = .RUF
-        currentChapter = userDefaultsManager.value(forKey: .currentChapter)
+                
+        translation = userDefaultsManager.translationValue(forKey: .translation)
+        currentChapter = userDefaultsManager.intValue(forKey: .currentChapter)
         
         $translation
             .sink(receiveValue: fetchAllBooksFromDatabase(translation:))
@@ -54,7 +58,7 @@ class BibliaStore: ObservableObject {
     
     func fetchVersesFromDatabaseFor(_ book: CDBook?) {
         guard let book = book else {return}
-        let request = CDVers.fetchRequest(predicate: NSPredicate(format: "translation_ = %@ and book_ = %@", translation.rawValue, book.abbrev))
+        let request = CDVers.fetchRequest(predicate: NSPredicate(format: "translation_ = %@ and book_ = %@", book.translation.rawValue, book.abbrev))
         let verses = (try? context.fetch(request)) ?? []
         if verses.isEmpty {
             fetchVersesFromNetwork(for: book)
@@ -83,6 +87,9 @@ class BibliaStore: ObservableObject {
     }
     
     func changeTranslation(to translation: Translation) {
+        if self.translation.changesFromCatholicToProtestant(to: translation) && self.currentBook!.isCatholic() {
+            userDefaultsManager.setIntValue(108, forKey: .currentBook)
+        }
         self.translation = translation
     }
     
@@ -94,8 +101,10 @@ class BibliaStore: ObservableObject {
         } else {
             isFirstLoading = false
             allBooks = books
-            let currentBookNumber = UserDefaults.standard.integer(forKey: "currentBook")
-            currentBook = books.first(where: {$0.number == currentBookNumber})
+            let currentBookNumber = userDefaultsManager.intValue(forKey: .currentBook)
+            if let book = books.first(where: {$0.number == currentBookNumber}) {
+                currentBook = book
+            }            
         }
     }
     

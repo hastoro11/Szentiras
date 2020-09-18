@@ -3,4 +3,102 @@
    uuid = "876B49BD-73E8-4710-8F02-CDB9C98FBF6A"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B32BDD99-FC1E-410B-935A-467CB57D15E5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Szentiras/Store/BibliaStore.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
+            landmarkName = "fetchAllBooksFromDatabase(translation:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "AB68A028-C5E0-43D3-9C03-9C2E0317234C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Szentiras/Store/BibliaStore.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "97"
+            endingLineNumber = "97"
+            landmarkName = "fetchAllBooksFromDatabase(translation:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ABA1F259-400F-492A-9D62-E7778D7AA7C0"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Szentiras/Store/BibliaStore.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "changeTranslation(to:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "ACBDE5CD-9E58-418C-8354-ACB6EB5C023C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Szentiras/Store/BibliaStore.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
+            landmarkName = "init(context:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "ACBDE5CD-9E58-418C-8354-ACB6EB5C023C - e110331a2f74d285"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Szentiras.BibliaStore.init(context: __C.NSManagedObjectContext) -&gt; Szentiras.BibliaStore"
+                  moduleName = "Szentiras"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/gabor.sornyei/Developer/-%20ios-projects/Szentiras/Szentiras/Store/BibliaStore.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "52"
+                  endingLineNumber = "52"
+                  offsetFromSymbolStart = "2477">
+               </Location>
+               <Location
+                  uuid = "ACBDE5CD-9E58-418C-8354-ACB6EB5C023C - bf225230fec5edf6"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "implicit closure #2 (Szentiras.Translation) -&gt; () in implicit closure #1 (Szentiras.BibliaStore) -&gt; (Szentiras.Translation) -&gt; () in Szentiras.BibliaStore.init(context: __C.NSManagedObjectContext) -&gt; Szentiras.BibliaStore"
+                  moduleName = "Szentiras"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/gabor.sornyei/Developer/-%20ios-projects/Szentiras/Szentiras/Store/BibliaStore.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "52"
+                  endingLineNumber = "52"
+                  offsetFromSymbolStart = "30">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

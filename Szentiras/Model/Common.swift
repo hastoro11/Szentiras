@@ -35,6 +35,10 @@ enum Translation: String, CaseIterable {
             return "Szent István Társulat"
         }
     }
+    
+    func changesFromCatholicToProtestant(to translation: Translation) -> Bool {
+        return (self == .KNB || self == .SZIT ) && (translation == .KG || translation == .RUF)        
+    }
 }
 
 enum BibliaError: Error, CustomStringConvertible, Identifiable {
