@@ -37,8 +37,6 @@ class BibliaStore: ObservableObject {
         }
     }
     
-    @Published var isFirstLoading = true
-    
     init(context: NSManagedObjectContext) {
         
         userDefaultsManager = UserDefaultManager()
@@ -98,8 +96,7 @@ class BibliaStore: ObservableObject {
         let books = (try? context.fetch(request)) ?? []
         if books.isEmpty {
             fetchAllBooksFromNetwork(translation: translation)
-        } else {
-            isFirstLoading = false
+        } else {            
             allBooks = books
             let currentBookNumber = userDefaultsManager.intValue(forKey: .currentBook)
             if let book = books.first(where: {$0.number == currentBookNumber}) {

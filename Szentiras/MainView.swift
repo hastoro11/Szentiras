@@ -6,12 +6,24 @@
 //
 
 import SwiftUI
+import Combine
 
-struct MainView: View {
-    @EnvironmentObject var store: BibliaStore
+struct MainView: View {    
+    var timerPublisher = Timer.publish(every: 1, on: RunLoop.main, in: .default).autoconnect()
+    @State var cancellable: AnyCancellable?
+    @State var count = 2
     var body: some View {
-        if store.isFirstLoading {
-            Text("First loading...")
+        if count != 0 {
+            SplashView()
+                .onAppear {
+                    cancellable = timerPublisher.sink(receiveValue: {_ in
+                        count = max(count-1, 0)
+                        if count == 0 {
+                            cancellable?.cancel()
+                        }
+                    })
+                    
+                }
         } else {
             AppTabView()
         }
