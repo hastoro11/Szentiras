@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C09C72F251492C400491697 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C09C72E251492C400491697 /* UserDefaultsManager.swift */; };
+		8C09C7372514E66600491697 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C09C7362514E66600491697 /* SplashView.swift */; };
+		8C3634EC25108C9D00D4BF82 /* BooksResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3634EB25108C9D00D4BF82 /* BooksResult.swift */; };
+		8C3634EE25108EC700D4BF82 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3634ED25108EC700D4BF82 /* Common.swift */; };
+		8C3634F025109BB000D4BF82 /* CDBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3634EF25109BB000D4BF82 /* CDBook.swift */; };
 		8CD2479C24FA28DE008ABCE5 /* SzentirasApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2479B24FA28DE008ABCE5 /* SzentirasApp.swift */; };
 		8CD2479E24FA28DE008ABCE5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2479D24FA28DE008ABCE5 /* ContentView.swift */; };
 		8CD247A024FA28E0008ABCE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8CD2479F24FA28E0008ABCE5 /* Assets.xcassets */; };
@@ -34,11 +39,11 @@
 		8CD247F524FA3AE7008ABCE5 /* ChapterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247F424FA3AE7008ABCE5 /* ChapterView.swift */; };
 		8CD247F724FA403E008ABCE5 /* ReadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247F624FA403E008ABCE5 /* ReadingViewModel.swift */; };
 		8CD247FA24FA6AC6008ABCE5 /* NetworkLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247F924FA6AC5008ABCE5 /* NetworkLayer.swift */; };
-		8CD247FC24FA6B2C008ABCE5 /* BibliaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247FB24FA6B2C008ABCE5 /* BibliaError.swift */; };
 		8CD247FE24FAB96E008ABCE5 /* BookChapterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247FD24FAB96E008ABCE5 /* BookChapterView.swift */; };
 		8CD2480024FAE782008ABCE5 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD247FF24FAE781008ABCE5 /* String+Extension.swift */; };
 		8CD2480224FBEB41008ABCE5 /* ActionSheet+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2480124FBEB41008ABCE5 /* ActionSheet+Extension.swift */; };
 		8CD2480424FBEBE9008ABCE5 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CD2480324FBEBE9008ABCE5 /* Header.swift */; };
+		8CE164D32511DDE600EE0DE6 /* CDVers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE164D22511DDE600EE0DE6 /* CDVers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +64,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8C09C72E251492C400491697 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		8C09C7362514E66600491697 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		8C3634EB25108C9D00D4BF82 /* BooksResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksResult.swift; sourceTree = "<group>"; };
+		8C3634ED25108EC700D4BF82 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		8C3634EF25109BB000D4BF82 /* CDBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDBook.swift; sourceTree = "<group>"; };
 		8CD2479824FA28DE008ABCE5 /* Szentiras.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Szentiras.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CD2479B24FA28DE008ABCE5 /* SzentirasApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SzentirasApp.swift; sourceTree = "<group>"; };
 		8CD2479D24FA28DE008ABCE5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -92,11 +102,11 @@
 		8CD247F424FA3AE7008ABCE5 /* ChapterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterView.swift; sourceTree = "<group>"; };
 		8CD247F624FA403E008ABCE5 /* ReadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadingViewModel.swift; sourceTree = "<group>"; };
 		8CD247F924FA6AC5008ABCE5 /* NetworkLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkLayer.swift; sourceTree = "<group>"; };
-		8CD247FB24FA6B2C008ABCE5 /* BibliaError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BibliaError.swift; sourceTree = "<group>"; };
 		8CD247FD24FAB96E008ABCE5 /* BookChapterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookChapterView.swift; sourceTree = "<group>"; };
 		8CD247FF24FAE781008ABCE5 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		8CD2480124FBEB41008ABCE5 /* ActionSheet+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ActionSheet+Extension.swift"; sourceTree = "<group>"; };
 		8CD2480324FBEBE9008ABCE5 /* Header.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
+		8CE164D22511DDE600EE0DE6 /* CDVers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDVers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +168,7 @@
 				8CD247D324FA2AEE008ABCE5 /* ReadingView */,
 				8CD247CD24FA2A2A008ABCE5 /* BookView */,
 				8CD247CB24FA2A09008ABCE5 /* MainView.swift */,
+				8C09C7362514E66600491697 /* SplashView.swift */,
 				8CD2479F24FA28E0008ABCE5 /* Assets.xcassets */,
 				8CD247A424FA28E0008ABCE5 /* Persistence.swift */,
 				8CD2479B24FA28DE008ABCE5 /* SzentirasApp.swift */,
@@ -227,8 +238,12 @@
 			isa = PBXGroup;
 			children = (
 				8CD247F224FA3AD5008ABCE5 /* Result.swift */,
+				8C3634EB25108C9D00D4BF82 /* BooksResult.swift */,
 				8CD247F024FA3AAD008ABCE5 /* MockData.swift */,
 				8CD247D724FA2B65008ABCE5 /* Biblia.swift */,
+				8C3634ED25108EC700D4BF82 /* Common.swift */,
+				8C3634EF25109BB000D4BF82 /* CDBook.swift */,
+				8CE164D22511DDE600EE0DE6 /* CDVers.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -283,7 +298,7 @@
 			isa = PBXGroup;
 			children = (
 				8CD247F924FA6AC5008ABCE5 /* NetworkLayer.swift */,
-				8CD247FB24FA6B2C008ABCE5 /* BibliaError.swift */,
+				8C09C72E251492C400491697 /* UserDefaultsManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -422,7 +437,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8CD247A524FA28E0008ABCE5 /* Persistence.swift in Sources */,
-				8CD247FC24FA6B2C008ABCE5 /* BibliaError.swift in Sources */,
+				8C3634EE25108EC700D4BF82 /* Common.swift in Sources */,
 				8CD247FE24FAB96E008ABCE5 /* BookChapterView.swift in Sources */,
 				8CD247D524FA2AFF008ABCE5 /* ReadingView.swift in Sources */,
 				8CD247FA24FA6AC6008ABCE5 /* NetworkLayer.swift in Sources */,
@@ -433,17 +448,22 @@
 				8CD247F324FA3AD5008ABCE5 /* Result.swift in Sources */,
 				8CD247A824FA28E0008ABCE5 /* Szentiras.xcdatamodeld in Sources */,
 				8CD247F524FA3AE7008ABCE5 /* ChapterView.swift in Sources */,
+				8CE164D32511DDE600EE0DE6 /* CDVers.swift in Sources */,
 				8CD2480024FAE782008ABCE5 /* String+Extension.swift in Sources */,
 				8CD2479E24FA28DE008ABCE5 /* ContentView.swift in Sources */,
 				8CD247CF24FA2A4C008ABCE5 /* BookView.swift in Sources */,
+				8C3634F025109BB000D4BF82 /* CDBook.swift in Sources */,
 				8CD247DB24FA2B84008ABCE5 /* Constants.swift in Sources */,
 				8CD2480424FBEBE9008ABCE5 /* Header.swift in Sources */,
 				8CD247D824FA2B65008ABCE5 /* Biblia.swift in Sources */,
 				8CD247D224FA2A7B008ABCE5 /* AppTabView.swift in Sources */,
 				8CD247CC24FA2A09008ABCE5 /* MainView.swift in Sources */,
+				8C09C72F251492C400491697 /* UserDefaultsManager.swift in Sources */,
 				8CD247DE24FA2B9B008ABCE5 /* Color+Extension.swift in Sources */,
 				8CD2479C24FA28DE008ABCE5 /* SzentirasApp.swift in Sources */,
 				8CD2480224FBEB41008ABCE5 /* ActionSheet+Extension.swift in Sources */,
+				8C09C7372514E66600491697 /* SplashView.swift in Sources */,
+				8C3634EC25108C9D00D4BF82 /* BooksResult.swift in Sources */,
 				8CD247F724FA403E008ABCE5 /* ReadingViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

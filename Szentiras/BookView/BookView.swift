@@ -11,27 +11,33 @@ struct BookView: View {
     @EnvironmentObject var store: BibliaStore
     @Binding var selectedTab: Int
     @State var showTranslationSheet = false    
-    @State var selectedBook: Book?
+    @State var selectedBook: CDBook?
     
     var columns = [GridItem(.adaptive(minimum: 52, maximum: 56), spacing: 10)]
     
     var body: some View {
         VStack {
             Header(selectedBook: selectedBook, showTranslationSheet: $showTranslationSheet, showSettings: .constant(false), selectedTab: $selectedTab, readingView: false)
-            ScrollView(showsIndicators: false) {
-                Text("Ószövetség")
-                    .font(.light18)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                bookList(books: store.biblia.books.filter({$0.covenant == .old}))
-                Text("Újszövetség")
-                    .font(.light18)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                bookList(books: store.biblia.books.filter({$0.covenant == .new}))
+            if store.isLoading {
+                Spacer()
+                ProgressView("Keresés...")
+            } else {
+                ScrollView(showsIndicators: false) {
+                    Text("Ószövetség")
+                        .font(.light18)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    bookList(books: store.allBooks.filter({$0.number < 200}))
+                    Text("Újszövetség")
+                        .font(.light18)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    bookList(books: store.allBooks.filter({$0.number > 200}))
+                }
+                .sheet(item: $selectedBook) { book in
+                    BookChapterView(book: book, selectedTab: $selectedTab)
+                        .environmentObject(store)
+                }
             }
-            .sheet(item: $selectedBook) { book in
-                BookChapterView(book: book, selectedTab: $selectedTab)
-                    .environmentObject(store)
-            }            
+            Spacer()
         }
         .padding(.horizontal)
         .onAppear {
@@ -39,13 +45,13 @@ struct BookView: View {
         }
     }
     
-    func bookList(books: [Book]) -> some View {
+    func bookList(books: [CDBook]) -> some View {
         LazyVGrid(columns: columns, spacing: 10) {
             ForEach(books) { book in
                 Button(action: {
                     selectedBook = book
                 }) {
-                    IconButton(title: book.abbreviation, size: 54, color: book.covenant == .old ? .colorGreen : .colorBlue)
+                    IconButton(title: book.abbrev, size: 54, color: book.number < 200 ? .colorGreen : .colorBlue)
                 }
             }
         }
@@ -55,6 +61,6 @@ struct BookView: View {
 struct BookView_Previews: PreviewProvider {
     static var previews: some View {
         BookView(selectedTab: .constant(1))
-            .environmentObject(BibliaStore(translation: .RUF))
+//            .environmentObject(BibliaStore(translation: .RUF))
     }
 }

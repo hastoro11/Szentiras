@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Header: View {
     @EnvironmentObject var store: BibliaStore
-    @State var selectedBook: Book?
+    @State var selectedBook: CDBook?
     @Binding var showTranslationSheet: Bool
     @Binding var showSettings: Bool
     @Binding var selectedTab: Int
@@ -20,18 +20,19 @@ struct Header: View {
             Button(action: {
                 selectedTab = 0
             }, label: {
-                IconButton(title: store.currentBook.abbreviation, icon: nil, size: 44, color: .dark)
+                IconButton(title: store.currentBook?.abbrev, icon: nil, size: 44, color: .dark)
             })
             Button(action: {
-                selectedBook = store.currentBook
+                selectedBook = store.currentBook                
             }, label: {
                 IconButton(title: String(store.currentChapter), icon: nil, size: 44, color: .colorYellow)
             })
+            .opacity(readingView ? 1 : 0)
             .sheet(item: $selectedBook) { book in
                 BookChapterView(book: book, selectedTab: $selectedTab)
             }
             Spacer()
-            Text(store.biblia.shortName)
+            Text(store.translation.shortName)
                 .font(.medium16)
             Spacer()
             Button(action: {
@@ -46,7 +47,7 @@ struct Header: View {
                 IconButton(icon: "bubble.left.and.bubble.right", size: 44, color: .colorRed)
             })
             .actionSheet(isPresented: $showTranslationSheet, content: {
-                ActionSheet.translationActionSheet(store: store, book: store.currentBook, readingView: readingView)
+                ActionSheet.translationActionSheet(store: store, readingView: readingView)
             })
         }
     }

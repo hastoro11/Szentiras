@@ -13,13 +13,10 @@ struct ReadingView: View {
     @Binding var selectedTab: Int
     @State var showTranslationSheet = false
     @State var showSettings = false
-    @State var selectedBook: Book?
+    @State var selectedBook: CDBook?
     @State var hideHeader = false
     
-    var maxNumberOfVerses: Int {
-        store.results.map({$0.valasz.versek.count}).max() ?? 0
-    }
-    var body: some View {
+    var body: some View {        
         ZStack(alignment: .bottom) {
             VStack {
                 if !hideHeader {
@@ -36,31 +33,29 @@ struct ReadingView: View {
             }
             .padding(.horizontal)
             .zIndex(0)
-            
-            
+
+
             if showSettings {
                 settingsView
-                    
+
             } // end VStack
         } // end ZStack
         .alert(item: $store.error) { (error) -> Alert in
             Alert(title: Text("Hiba"), message: Text(error.description), dismissButton: .default(Text("OK")))
         }
-        
-        .onAppear {
-            store.fetchBook(book: store.currentBook)
-        }
+
     }
     
     var bookChapterTabview: some View {
-        TabView(selection: $store.currentChapter) {
-            ForEach(store.results) { result in
-                ChapterView(result: result, maxNumberOfVerses: maxNumberOfVerses)
+        let numberOfChaptersInCurrentBook = numberOfChaptersInBookByNumber[store.currentBook!.number, default: 1]
+        return TabView(selection: $store.currentChapter) {
+            ForEach(1...numberOfChaptersInCurrentBook, id:\.self) { chapter in
+                ChapterView(verses: store.allVersesInABook.filter({$0.chapter == chapter}))
+                    .tag(chapter)
                     .environmentObject(viewModel)
-                    .tag(chapterFromResult(result: result))
             }
-            
-        }.tabViewStyle(PageTabViewStyle())
+        }
+        .tabViewStyle(PageTabViewStyle())
         .onTapGesture {
             withAnimation(.spring()) {
                 hideHeader.toggle()
@@ -110,9 +105,9 @@ struct ReadingView: View {
     }
 }
 
-struct ReadingView_Previews: PreviewProvider {
-    static var previews: some View {
-        ReadingView(selectedTab: .constant(0))
-            .environmentObject(BibliaStore(translation: .RUF))
-    }
-}
+//struct ReadingView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ReadingView(selectedTab: .constant(0))
+//            .environmentObject(BibliaStore(translation: .RUF))
+//    }
+//}

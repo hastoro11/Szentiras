@@ -8,16 +8,14 @@
 import SwiftUI
 
 struct ChapterView: View {
-    var result: Result
     @EnvironmentObject var viewModel: ReadingViewModel
     @EnvironmentObject var store: BibliaStore
-    var maxNumberOfVerses: Int
+    var verses: [CDVers]
     var bookTitle: String {
-        let abbr = result.keres.hivatkozas.split(separator: " ")[0]
-        let book = store.biblia.books.first(where: {$0.abbreviation == abbr})
+        let book = store.currentBook
         return book?.name ?? ""
     }
-    var body: some View {
+    var body: some View {        
         ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 6) {
                 VStack {
@@ -34,43 +32,39 @@ struct ChapterView: View {
                 
                 if !viewModel.continous {
                     notContinuous()
+                        .lineSpacing(6)
                 }
-            }            
+            }
         }
-        
-    }
-    
+    }   
+
     @ViewBuilder
     func notContinuous() -> some View {
         Group {
             if viewModel.showIndex {
-                ForEach(0..<maxNumberOfVerses, id:\.self) { v in
-                    if v < result.valasz.versek.count {
-                        Group {
-                            Text("\(v+1) ").font(viewModel.indexSize)
-                                + Text(result.valasz.versek[v].szoveg?.strippedHTMLElements ?? "").font(viewModel.textSize)
-                        }
-                        .lineSpacing(6)
+                ForEach(verses) { vers in
+                    Group {
+                        Text("\(vers.index) ").font(viewModel.indexSize)
+                            + Text(vers.szoveg.strippedHTMLElements).font(viewModel.textSize)
                     }
+                    .lineSpacing(6)
                 }
             } else {
-                ForEach(1...maxNumberOfVerses, id:\.self) { v in
-                    if v < result.valasz.versek.count {
-                        Text(result.valasz.versek[v].szoveg?.strippedHTMLElements ?? "").font(viewModel.textSize).lineSpacing(6)
-                    }
+                ForEach(verses) { vers in
+                    Text(vers.szoveg.strippedHTMLElements).font(viewModel.textSize).lineSpacing(6)
                 }
             }
         }
     }
-    
+
     func continousText() -> some View {
-        let versek = result.valasz.versek.reduce("") { (result, vers) in
-            result + (vers.szoveg?.strippedHTMLElements ?? "") + " "
+        let versek = verses.reduce("") { (result, vers) in
+            result + (vers.szoveg.strippedHTMLElements) + " "
         }
         var text = Text("")
-        for index in result.valasz.versek.indices {
-            text = text + Text("\(index+1) ").font(viewModel.indexSize)
-            text = text + Text(result.valasz.versek[index].szoveg?.strippedHTMLElements ?? "").font(viewModel.textSize) + Text(" ")
+        for vers in verses {
+            text = text + Text("\(vers.index) ").font(viewModel.indexSize)
+            text = text + Text(vers.szoveg.strippedHTMLElements).font(viewModel.textSize) + Text(" ")
         }
         return Group {
             if !viewModel.showIndex {
@@ -85,9 +79,9 @@ struct ChapterView: View {
     }
 }
 
-struct ChapterView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChapterView(result: result1, maxNumberOfVerses: result1.valasz.versek.count)
-            .environmentObject(ReadingViewModel())
-    }
-}
+//struct ChapterView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ChapterView(result: result1, maxNumberOfVerses: result1.valasz.versek.count)
+//            .environmentObject(ReadingViewModel())
+//    }
+//}

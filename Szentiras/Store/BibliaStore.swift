@@ -8,84 +8,118 @@
 import Foundation
 import SwiftUI
 import Combine
+import CoreData
 
 class BibliaStore: ObservableObject {
-    @Published var biblia: Biblia
-    @Published var currentBook: Book {
-        didSet {
-            saveUserDefaults()
-        }
-    }
-    @Published var results: [Result] = []
-    @Published var isLoading = false
+    var context: NSManagedObjectContext
+    @Published var isLoading: Bool = false
     @Published var error: BibliaError?
-    @Published var currentChapter: Int {
-        didSet {
-            saveUserDefaults()
-        }
-    }
-    
-    var bookCancellable: Cancellable?
     var cancellables = Set<AnyCancellable>()
-    var network = NetworkLayer()
+    var userDefaultsManager: UserDefaultManager
     
-    func changeTranslation(to translation: Translation) {
-        if (biblia.translation == .KNB || biblia.translation == .SZIT) && (translation == .KG || translation == .RUF) {
-            biblia.translation = translation
-            currentBook = biblia.books[0]
-        } else {
-            biblia.translation = translation
+    @Published var translation: Translation {
+        willSet {
+            userDefaultsManager.setTranslationValue(newValue, forKey: .translation)
         }
-        currentChapter = min(currentChapter, currentBook.chapters)
-        saveUserDefaults()
     }
     
-    func changeTranslationWhileReading(to translation: Translation) {
-        biblia.translation = translation
-        currentChapter = min(currentChapter, currentBook.chapters)
-        fetchBook(book: currentBook)
-        saveUserDefaults()
+    @Published var allBooks: [CDBook] = []
+    @Published var allVersesInABook: [CDVers] = []
+    
+    @Published var currentBook: CDBook? {
+        willSet {
+            userDefaultsManager.setIntValue(newValue!.number, forKey: .currentBook)
+        }
+    }
+    @Published var currentChapter: Int {
+        willSet {
+            userDefaultsManager.setIntValue(newValue, forKey: .currentChapter)
+        }
     }
     
-    private func saveUserDefaults() {
-        UserDefaults.standard.set(biblia.translation.rawValue, forKey: "translation")
-        let currentBookIndex = biblia.books.firstIndex(of: currentBook) ?? 0
-        UserDefaults.standard.set(currentChapter, forKey: "currentChapter")
-        UserDefaults.standard.set(currentBookIndex, forKey: "currentBookIndex")
-    }
-    
-    func fetchBook(book: Book) {
-        isLoading = true
-        bookCancellable?.cancel()
+    init(context: NSManagedObjectContext) {
         
-        bookCancellable = network.fetchBookResults(biblia: biblia, book: book)
-            .sink(receiveCompletion: { [unowned self] in
+        userDefaultsManager = UserDefaultManager()
+        
+        self.context = context
+                
+        translation = userDefaultsManager.translationValue(forKey: .translation)
+        currentChapter = userDefaultsManager.intValue(forKey: .currentChapter)
+        
+        $translation
+            .sink(receiveValue: fetchAllBooksFromDatabase(translation:))
+            .store(in: &cancellables)
+        $currentBook
+            .sink(receiveValue: fetchVersesFromDatabaseFor)
+            .store(in: &cancellables)
+    }
+    
+    func fetchVersesFromDatabaseFor(_ book: CDBook?) {
+        guard let book = book else {return}
+        let request = CDVers.fetchRequest(predicate: NSPredicate(format: "translation_ = %@ and book_ = %@", book.translation.rawValue, book.abbrev))
+        let verses = (try? context.fetch(request)) ?? []
+        if verses.isEmpty {
+            fetchVersesFromNetwork(for: book)
+        } else {
+            allVersesInABook = verses
+        }
+    }
+    
+    func fetchVersesFromNetwork(for book: CDBook) {
+        isLoading = true
+        NetworkLayer.fetchVersesFromNetwork(for: book)
+            .receive(on: RunLoop.main)
+            .sink(receiveCompletion: { [self]completion in
                 isLoading = false
-                switch $0 {
+                switch completion {
                 case .failure(let error):
                     self.error = error
                 default:
                     break
                 }
-            }, receiveValue: {results in
-                self.results = results.sorted(by: {lh, rh -> Bool in
-                    let lv = Int(lh.keres.hivatkozas.split(separator: " ")[1]) ?? 0
-                    let rv = Int(rh.keres.hivatkozas.split(separator: " ")[1]) ?? 0
-                    return lv < rv
-                })
-                
+            }, receiveValue: { [self]results in
+                CDVers.saveVersesFromResults(book: book, results: results, context: context)
+                fetchVersesFromDatabaseFor(book)
             })
+            .store(in: &cancellables)
     }
     
-    init(translation: Translation) {
-        let biblia = Biblia(with: translation)
-        self.biblia = biblia
-        let currentBookIndex = UserDefaults.standard.integer(forKey: "currentBookIndex")
-        self.currentBook = biblia.books[currentBookIndex]
-        self.currentChapter = max(UserDefaults.standard.integer(forKey: "currentChapter"), 1)
-        $currentBook
-            .sink(receiveValue: { [unowned self] book in
-                fetchBook(book: book)
+    func changeTranslation(to translation: Translation) {
+        if self.translation.changesFromCatholicToProtestant(to: translation) && self.currentBook!.isCatholic() {
+            userDefaultsManager.setIntValue(108, forKey: .currentBook)
+        }
+        self.translation = translation
+    }
+    
+    func fetchAllBooksFromDatabase(translation: Translation) {
+        let request = CDBook.fetchRequest(predicate: NSPredicate(format: "translation_ = %@", translation.rawValue))
+        let books = (try? context.fetch(request)) ?? []
+        if books.isEmpty {
+            fetchAllBooksFromNetwork(translation: translation)
+        } else {            
+            allBooks = books
+            let currentBookNumber = userDefaultsManager.intValue(forKey: .currentBook)
+            if let book = books.first(where: {$0.number == currentBookNumber}) {
+                currentBook = book
+            }            
+        }
+    }
+    
+    func fetchAllBooksFromNetwork(translation: Translation) {
+        isLoading = true
+        NetworkLayer.fetchAllBooksFromNetwork(translation: translation)
+            .receive(on: RunLoop.main)
+            .sink(receiveCompletion: { [unowned self]completion in
+                isLoading = false
+                switch completion {
+                case .failure(let error):
+                    self.error = error
+                default:
+                    break
+                }
+            }, receiveValue: { [self] in
+                CDBook.saveBooksResult(booksResult:$0, context: context)
+                fetchAllBooksFromDatabase(translation: translation)
             })
             .store(in: &cancellables)
     }
