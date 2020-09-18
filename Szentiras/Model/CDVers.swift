@@ -56,7 +56,8 @@ extension CDVers {
     
     private static func saveVersesFromOneResult(book: CDBook, result: Result, context: NSManagedObjectContext) {
         result.valasz.versek.forEach { vers in
-            guard let chapter = Int(result.keres.hivatkozas.split(separator: " ")[1]) else {return}
+
+            guard let chapter = result.chapter else { return }
             let cdVers = CDVers(context: context)
             cdVers.book = book.abbrev
             cdVers.chapter = chapter

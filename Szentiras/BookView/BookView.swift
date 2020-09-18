@@ -19,6 +19,7 @@ struct BookView: View {
         VStack {
             Header(selectedBook: selectedBook, showTranslationSheet: $showTranslationSheet, showSettings: .constant(false), selectedTab: $selectedTab, readingView: false)
             if store.isLoading {
+                Spacer()
                 ProgressView("Keresés...")
             } else {
                 ScrollView(showsIndicators: false) {
@@ -36,7 +37,7 @@ struct BookView: View {
                         .environmentObject(store)
                 }
             }
-                       
+            Spacer()
         }
         .padding(.horizontal)
         .onAppear {

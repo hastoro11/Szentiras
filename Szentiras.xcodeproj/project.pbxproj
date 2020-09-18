@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C09C72F251492C400491697 /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C09C72E251492C400491697 /* UserDefaultsManager.swift */; };
 		8C3634EC25108C9D00D4BF82 /* BooksResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3634EB25108C9D00D4BF82 /* BooksResult.swift */; };
 		8C3634EE25108EC700D4BF82 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3634ED25108EC700D4BF82 /* Common.swift */; };
 		8C3634F025109BB000D4BF82 /* CDBook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3634EF25109BB000D4BF82 /* CDBook.swift */; };
@@ -62,6 +63,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8C09C72E251492C400491697 /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		8C3634EB25108C9D00D4BF82 /* BooksResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksResult.swift; sourceTree = "<group>"; };
 		8C3634ED25108EC700D4BF82 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		8C3634EF25109BB000D4BF82 /* CDBook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CDBook.swift; sourceTree = "<group>"; };
@@ -293,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				8CD247F924FA6AC5008ABCE5 /* NetworkLayer.swift */,
+				8C09C72E251492C400491697 /* UserDefaultsManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 				8CD247D824FA2B65008ABCE5 /* Biblia.swift in Sources */,
 				8CD247D224FA2A7B008ABCE5 /* AppTabView.swift in Sources */,
 				8CD247CC24FA2A09008ABCE5 /* MainView.swift in Sources */,
+				8C09C72F251492C400491697 /* UserDefaultsManager.swift in Sources */,
 				8CD247DE24FA2B9B008ABCE5 /* Color+Extension.swift in Sources */,
 				8CD2479C24FA28DE008ABCE5 /* SzentirasApp.swift in Sources */,
 				8CD2480224FBEB41008ABCE5 /* ActionSheet+Extension.swift in Sources */,

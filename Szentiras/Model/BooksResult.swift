@@ -43,7 +43,7 @@ struct Book: Codable, Identifiable {
     
 }
 
-var bookChapters = [
+var numberOfChaptersInBookByNumber = [
     101: 50,
     102: 40,
     103: 27,

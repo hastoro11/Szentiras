@@ -47,7 +47,7 @@ struct ReadingView: View {
     }
     
     var bookChapterTabview: some View {
-        let numberOfChaptersInCurrentBook = bookChapters[store.currentBook!.number, default: 1]
+        let numberOfChaptersInCurrentBook = numberOfChaptersInBookByNumber[store.currentBook!.number, default: 1]
         return TabView(selection: $store.currentChapter) {
             ForEach(1...numberOfChaptersInCurrentBook, id:\.self) { chapter in
                 ChapterView(verses: store.allVersesInABook.filter({$0.chapter == chapter}))

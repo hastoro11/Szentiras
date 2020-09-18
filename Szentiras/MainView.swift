@@ -7,9 +7,14 @@
 
 import SwiftUI
 
-struct MainView: View {    
+struct MainView: View {
+    @EnvironmentObject var store: BibliaStore
     var body: some View {
-        AppTabView()
+        if store.isFirstLoading {
+            Text("First loading...")
+        } else {
+            AppTabView()
+        }
             
     }    
 }

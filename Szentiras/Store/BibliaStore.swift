@@ -15,18 +15,35 @@ class BibliaStore: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var error: BibliaError?
     var cancellables = Set<AnyCancellable>()
+    var userDefaultsManager: UserDefaultManager
     
     @Published var translation: Translation    
     @Published var allBooks: [CDBook] = []
     @Published var allVersesInABook: [CDVers] = []
     
-    @Published var currentBook: CDBook?
-    @Published var currentChapter: Int
+    @Published var currentBook: CDBook? {
+        willSet {
+            userDefaultsManager.setValue(newValue!.number, forKey: .currentBook)
+        }
+    }
+    @Published var currentChapter: Int {
+        willSet {
+            userDefaultsManager.setValue(newValue, forKey: .currentChapter)
+        }
+    }
+    
+    @Published var isFirstLoading = true
     
     init(context: NSManagedObjectContext) {
+        
+        userDefaultsManager = UserDefaultManager()
+        
         self.context = context
+        // Init data
+        // TODO: UserDefaults
         translation = .RUF
-        currentChapter = 1
+        currentChapter = userDefaultsManager.value(forKey: .currentChapter)
+        
         $translation
             .sink(receiveValue: fetchAllBooksFromDatabase(translation:))
             .store(in: &cancellables)
@@ -75,8 +92,10 @@ class BibliaStore: ObservableObject {
         if books.isEmpty {
             fetchAllBooksFromNetwork(translation: translation)
         } else {
-            self.allBooks = books
-            self.currentBook = books[7]
+            isFirstLoading = false
+            allBooks = books
+            let currentBookNumber = UserDefaults.standard.integer(forKey: "currentBook")
+            currentBook = books.first(where: {$0.number == currentBookNumber})
         }
     }
     

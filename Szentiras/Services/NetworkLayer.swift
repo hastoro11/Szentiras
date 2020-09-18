@@ -13,7 +13,11 @@ class NetworkLayer: ObservableObject {
     static func fetchAllBooksFromNetwork(translation: Translation) -> AnyPublisher<BooksResult, BibliaError> {
         let urlStr = "https://szentiras.hu/api/books/\(translation.rawValue)"
         let url = URL(string: urlStr)!
-        return URLSession.shared.dataTaskPublisher(for: url)
+        return fetch(url)
+    }
+    
+    private static func fetch<T: Codable>(_ url: URL) -> AnyPublisher<T, BibliaError> {
+        URLSession.shared.dataTaskPublisher(for: url)
             .tryMap({data, response in
                 if let response = response as? HTTPURLResponse, !(200...299).contains(response.statusCode) {
                     throw BibliaError.network
@@ -24,7 +28,7 @@ class NetworkLayer: ObservableObject {
                 
                 return data
             })
-            .decode(type: BooksResult.self, decoder: JSONDecoder())
+            .decode(type: T.self, decoder: JSONDecoder())
             .mapError({error -> BibliaError in
                 switch error {
                 case is URLError:
@@ -39,7 +43,7 @@ class NetworkLayer: ObservableObject {
     }
     
     static func fetchVersesFromNetwork(for book: CDBook) -> AnyPublisher<[Result], BibliaError> {
-        guard let chaptersInBook = bookChapters[book.number] else { return Empty(outputType: [Result].self, failureType: BibliaError.self).eraseToAnyPublisher() }
+        guard let chaptersInBook = numberOfChaptersInBookByNumber[book.number] else { return Empty(outputType: [Result].self, failureType: BibliaError.self).eraseToAnyPublisher() }
         let publishers = (1...chaptersInBook).map({fetchChapterFromNetwork(for: book, chapter: $0)})
         
         return Publishers.MergeMany(publishers).collect().eraseToAnyPublisher()

@@ -12,7 +12,7 @@ struct BookChapterView: View {
     @Environment(\.presentationMode) var presentationMode
     var book: CDBook
     var chapterNumbers: Int {
-        bookChapters[book.number]!
+        numberOfChaptersInBookByNumber[book.number]!
     }
     @Binding var selectedTab: Int
     var columns = [GridItem(.adaptive(minimum: 52, maximum: 56), spacing: 10)]
@@ -26,7 +26,7 @@ struct BookChapterView: View {
                     ForEach(1...chapterNumbers, id:\.self) { ch in
                         Button(action: {
                             store.currentBook = book
-                            store.currentChapter = ch
+                            store.currentChapter = ch                            
                             selectedTab = 1
                             presentationMode.wrappedValue.dismiss()
                         }, label: {
