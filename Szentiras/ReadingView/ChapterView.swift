@@ -11,6 +11,7 @@ struct ChapterView: View {
     @EnvironmentObject var viewModel: ReadingViewModel
     @EnvironmentObject var store: BibliaStore
     var verses: [CDVers]
+    @Binding var highlightedVers: CDVers?
     var bookTitle: String {
         let book = store.currentBook
         return book?.name ?? ""
@@ -48,6 +49,9 @@ struct ChapterView: View {
                             + Text(vers.szoveg.strippedHTMLElements).font(viewModel.textSize)
                     }
                     .lineSpacing(6)
+                    .onLongPressGesture {
+                        highlightedVers = vers
+                    }
                 }
             } else {
                 ForEach(verses) { vers in

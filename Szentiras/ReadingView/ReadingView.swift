@@ -15,7 +15,7 @@ struct ReadingView: View {
     @State var showSettings = false
     @State var selectedBook: CDBook?
     @State var hideHeader = false
-    
+    @State var highlightedVers: CDVers?
     var body: some View {        
         ZStack(alignment: .bottom) {
             VStack {
@@ -33,12 +33,15 @@ struct ReadingView: View {
             }
             .padding(.horizontal)
             .zIndex(0)
-
+            // end VStack
 
             if showSettings {
                 settingsView
-
-            } // end VStack
+            }
+            
+            if highlightedVers != nil {
+                highlightedVersView(highlightedVers!)
+            }
         } // end ZStack
         .alert(item: $store.error) { (error) -> Alert in
             Alert(title: Text("Hiba"), message: Text(error.description), dismissButton: .default(Text("OK")))
@@ -46,11 +49,59 @@ struct ReadingView: View {
 
     }
     
+    func highlightedVersView(_ vers: CDVers) -> some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text(highlightedVers!.szep)
+                    .font(.medium14)
+                Spacer()
+                Image(systemName: "xmark")
+                    .font(.medium14)
+                    .onTapGesture {
+                        highlightedVers = nil
+                    }
+            }
+            .padding(EdgeInsets(top: 16, leading: 16, bottom: 8, trailing: 16))
+            Divider()
+                .background(Color.dark)
+                .padding(.horizontal)
+            
+            Text("Kiemelés")
+                .font(.medium14)
+                .padding(.leading)
+            HStack {
+                ForEach(["Red", "Blue", "Yellow", "Green"], id:\.self) { color in
+                    Circle().fill(Color(color)).frame(width: .bigCircle, height: .bigCircle)
+                }
+            }
+            .padding()
+            
+            Button(action: {}, label: {
+                Text("Jegyzetek")
+                    .font(.medium14)
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 54)
+                    .background(RoundedRectangle(cornerRadius: 12).stroke(Color.dark, lineWidth: 0.5))
+            })
+            .accentColor(.dark)
+            .padding(.horizontal)
+            
+            Spacer()
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 250)
+        .background(Color.white.edgesIgnoringSafeArea(.bottom).shadow(radius: 5))
+        .zIndex(9)
+        .transition(.move(edge: .bottom))
+        .animation(.spring())
+        
+    }
+    
     var bookChapterTabview: some View {
         let numberOfChaptersInCurrentBook = numberOfChaptersInBookByNumber[store.currentBook!.number, default: 1]
         return TabView(selection: $store.currentChapter) {
             ForEach(1...numberOfChaptersInCurrentBook, id:\.self) { chapter in
-                ChapterView(verses: store.allVersesInABook.filter({$0.chapter == chapter}))
+                ChapterView(verses: store.allVersesInABook.filter({$0.chapter == chapter}), highlightedVers: $highlightedVers)
                     .tag(chapter)
                     .environmentObject(viewModel)
             }
@@ -111,3 +162,9 @@ struct ReadingView: View {
 //            .environmentObject(BibliaStore(translation: .RUF))
 //    }
 //}
+
+struct ReadingView_Previews: PreviewProvider {
+    static var previews: some View {
+        /*@START_MENU_TOKEN@*/Text("Hello, World!")/*@END_MENU_TOKEN@*/
+    }
+}
