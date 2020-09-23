@@ -17,34 +17,37 @@ struct ReadingView: View {
     @State var hideHeader = false
     @State var highlightedVers: CDVers?
     var body: some View {        
-        ZStack(alignment: .bottom) {
-            VStack {
-                if !hideHeader {
-                    Header(selectedBook: selectedBook, showTranslationSheet: $showTranslationSheet, showSettings: $showSettings, selectedTab: $selectedTab, noReadingOption: false, readingView: true)
-                    .transition(AnyTransition.move(edge: .top).combined(with: .opacity))
+        NavigationView {
+            ZStack(alignment: .bottom) {
+                VStack {
+                    if !hideHeader {
+                        Header(selectedBook: selectedBook, showTranslationSheet: $showTranslationSheet, showSettings: $showSettings, selectedTab: $selectedTab, noReadingOption: false, readingView: true)
+                        .transition(AnyTransition.move(edge: .top).combined(with: .opacity))
+                    }
+                    Spacer()
+                    if store.isLoading {
+                        ProgressView("Keresés...")
+                    } else {
+                        bookChapterTabview
+                    }
+                    Spacer()
                 }
-                Spacer()
-                if store.isLoading {
-                    ProgressView("Keresés...")
-                } else {
-                    bookChapterTabview
-                }
-                Spacer()
-            }
-            .padding(.horizontal)
-            .zIndex(0)
-            // end VStack
+                .padding(.horizontal)
+                .zIndex(0)
+                // end VStack
 
-            if showSettings {
-                settingsView
+                if showSettings {
+                    settingsView
+                }
+                
+                if highlightedVers != nil {
+                    highlightedVersView(highlightedVers!)
+                }
+            } // end ZStack
+            .alert(item: $store.error) { (error) -> Alert in
+                Alert(title: Text("Hiba"), message: Text(error.description), dismissButton: .default(Text("OK")))
             }
-            
-            if highlightedVers != nil {
-                highlightedVersView(highlightedVers!)
-            }
-        } // end ZStack
-        .alert(item: $store.error) { (error) -> Alert in
-            Alert(title: Text("Hiba"), message: Text(error.description), dismissButton: .default(Text("OK")))
+            .navigationBarHidden(true)
         }
 
     }
@@ -76,15 +79,17 @@ struct ReadingView: View {
             }
             .padding()
             
-            Button(action: {}, label: {
-                Text("Jegyzetek")
-                    .font(.medium14)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 54)
-                    .background(RoundedRectangle(cornerRadius: 12).stroke(Color.dark, lineWidth: 0.5))
-            })
-            .accentColor(.dark)
-            .padding(.horizontal)
+            NavigationLink(
+                destination: AddEditNotesView(),
+                label: {
+                    Text("Jegyzetek")
+                        .font(.medium16)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 54)
+                        .background(RoundedRectangle(cornerRadius: 12).stroke(Color.dark, lineWidth: 0.5))
+                })
+                .buttonStyle(PlainButtonStyle())
+                .padding(.horizontal)
             
             Spacer()
         }
@@ -101,17 +106,12 @@ struct ReadingView: View {
         let numberOfChaptersInCurrentBook = numberOfChaptersInBookByNumber[store.currentBook!.number, default: 1]
         return TabView(selection: $store.currentChapter) {
             ForEach(1...numberOfChaptersInCurrentBook, id:\.self) { chapter in
-                ChapterView(verses: store.allVersesInABook.filter({$0.chapter == chapter}), highlightedVers: $highlightedVers)
+                ChapterView(verses: store.allVersesInABook.filter({$0.chapter == chapter}), highlightedVers: $highlightedVers, hideHeader: $hideHeader)
                     .tag(chapter)
                     .environmentObject(viewModel)
             }
         }
         .tabViewStyle(PageTabViewStyle())
-        .onTapGesture {
-            withAnimation(.spring()) {
-                hideHeader.toggle()
-            }
-        }
     }
     
     var settingsView: some View {
