@@ -80,7 +80,7 @@ struct ReadingView: View {
             .padding()
             
             NavigationLink(
-                destination: AddEditNotesView(),
+                destination: AddEditNotesView(vers: highlightedVers!),
                 label: {
                     Text("Jegyzetek")
                         .font(.medium16)

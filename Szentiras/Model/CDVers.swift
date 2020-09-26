@@ -37,6 +37,10 @@ extension CDVers {
         get { translation_ ?? ""}
         set { translation_ = newValue }
     }
+    var notes: String {
+        get { notes_ ?? ""}
+        set { notes_ = newValue }
+    }
 }
 
 extension CDVers {
@@ -69,5 +73,17 @@ extension CDVers {
             
             try? context.save()
         }
+    }
+}
+
+extension CDVers {
+    func saveNotes(notes: String, context: NSManagedObjectContext) {
+        let predicate = NSPredicate(format: "gepi_ = %@", self.gepi)
+        let request = CDVers.fetchRequest(predicate: predicate)
+        let verses = (try? context.fetch(request)) ?? []
+        verses.forEach({vers in
+            vers.notes = notes
+        })
+        try? context.save()
     }
 }

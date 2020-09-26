@@ -48,9 +48,8 @@ struct ChapterView: View {
             if viewModel.showIndex {
                 ForEach(verses) { vers in
                     Group {
-                        Text("\(vers.index) ").font(viewModel.indexSize)
+                        Text("\(vers.index) " + (vers.notes.isEmpty ? "" : "*")).font(viewModel.indexSize)
                             + Text(vers.szoveg.strippedHTMLElements).font(viewModel.textSize)
-                            
                     }
                     .id(vers.gepi)
                     .lineSpacing(6)
@@ -79,7 +78,7 @@ struct ChapterView: View {
         }
         var text = Text("")
         for vers in verses {
-            text = text + Text("\(vers.index) ").font(viewModel.indexSize)
+            text = text + Text("\(vers.index) " + (vers.notes.isEmpty ? "" : "*")).font(viewModel.indexSize)
             text = text + Text(vers.szoveg.strippedHTMLElements).font(viewModel.textSize) + Text(" ")
         }
         return Group {

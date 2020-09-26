@@ -8,9 +8,14 @@
 import SwiftUI
 
 struct AddEditNotesView: View {
+    @Environment(\.managedObjectContext) var context
     @Environment(\.presentationMode) var presentationMode
-//    var vers: CDVers
-    @State var notes: String = ""
+    var vers: CDVers
+    @State var notes: String    
+    init(vers: CDVers) {
+        self.vers = vers
+        _notes = State(wrappedValue: vers.notes)
+    }
     var body: some View {
         VStack {
             HStack {
@@ -31,7 +36,7 @@ struct AddEditNotesView: View {
             HStack {
                 Circle().fill(Color.colorRed)
                     .frame(width: .smallCircle, height: .smallCircle)
-                Text("1Móz 13, 1")
+                Text(vers.szep)
                     .font(.medium14)
                 Spacer()
                 
@@ -45,6 +50,7 @@ struct AddEditNotesView: View {
                 .padding(EdgeInsets(top: 16, leading: 16, bottom: 0, trailing: 16))
             
             Button(action: {
+                vers.saveNotes(notes: notes, context: context)
                 presentationMode.wrappedValue.dismiss()
             }, label: {
                 Text("Mentés")
@@ -60,10 +66,10 @@ struct AddEditNotesView: View {
     }
 }
 
-struct AddEditNotesView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            AddEditNotesView()
-        }
-    }
-}
+//struct AddEditNotesView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NavigationView {
+//            AddEditNotesView()
+//        }
+//    }
+//}
