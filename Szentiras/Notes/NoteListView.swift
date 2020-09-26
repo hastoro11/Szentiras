@@ -53,53 +53,6 @@ struct NoteListView: View {
     }
 }
 
-struct NoteRow: View {
-    @ObservedObject var vers: CDVers
-    var color: Color {
-        switch vers.translation {
-        case "RUF":
-            return .colorYellow
-        case "KG":
-            return .colorRed
-        case "KNB":
-            return .colorGreen
-        case "SZIT":
-            return .colorBlue
-        default:
-            return .clear
-        }
-    }
-    var body: some View {
-        NavigationLink(
-            destination: AddEditNotesView(vers: vers)) {
-            VStack {
-                HStack(spacing: 20) {
-                    Text(vers.translation)
-                        .foregroundColor(.white)
-                        .frame(width: .bigCircle, height: .bigCircle)
-                        .background(Circle().fill(color))
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text(vers.szep)
-                                .font(.medium16)
-                            Spacer()
-                            Text(vers.timestamp?.stringFormat ?? "")
-                                .font(.regular14)
-                                .foregroundColor(.gray)
-                        }
-                        Text(vers.notes)
-                            .font(.light18)
-                            .lineLimit(2)
-                        Spacer()
-                    }
-                }
-                Spacer()
-            }
-            .frame(height: 85)
-        }
-        .listRowBackground(Color.white)
-    }
-}
 
 struct NoteListView_Previews: PreviewProvider {
     static var previews: some View {

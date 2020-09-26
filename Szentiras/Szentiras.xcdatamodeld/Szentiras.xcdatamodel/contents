@@ -11,6 +11,7 @@
         <attribute name="chapter_" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="gepi_" optional="YES" attributeType="String"/>
         <attribute name="index_" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="marking_" optional="YES" attributeType="String"/>
         <attribute name="notes_" optional="YES" attributeType="String"/>
         <attribute name="szep_" optional="YES" attributeType="String"/>
         <attribute name="szoveg_" optional="YES" attributeType="String"/>
@@ -22,7 +23,7 @@
     </entity>
     <elements>
         <element name="CDBook" positionX="-63" positionY="-18" width="128" height="103"/>
-        <element name="CDVers" positionX="-63" positionY="9" width="128" height="178"/>
+        <element name="CDVers" positionX="-63" positionY="9" width="128" height="193"/>
         <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
     </elements>
 </model>

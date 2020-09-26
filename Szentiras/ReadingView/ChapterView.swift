@@ -47,22 +47,19 @@ struct ChapterView: View {
         Group {
             if viewModel.showIndex {
                 ForEach(verses) { vers in
-                    Group {
-                        Text("\(vers.index) " + (vers.notes.isEmpty ? "" : "*")).font(viewModel.indexSize)
-                            + Text(vers.szoveg.strippedHTMLElements).font(viewModel.textSize)
-                    }
-                    .id(vers.gepi)
-                    .lineSpacing(6)
-                    .onTapGesture {
-                        withAnimation(.spring()) {
-                            hideHeader.toggle()
+                    versRow(vers: vers)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(vers.marking.opacity(0.3))
+                        .background(highlightedVers == vers ? Color.black.opacity(0.2) : Color.clear)
+                        .onTapGesture {
+                            withAnimation(.spring()) {
+                                hideHeader.toggle()
+                            }
                         }
-                    }
-                    .onLongPressGesture {
-                        highlightedVers = vers
-                        reader.scrollTo(vers.gepi, anchor: .top)
-                    }
-                    .background(highlightedVers == vers ? Color.black.opacity(0.2) : Color.clear)
+                        .onLongPressGesture {
+                            highlightedVers = vers
+                            reader.scrollTo(vers.gepi, anchor: .top)
+                        }
                 }
             } else {
                 ForEach(verses) { vers in
@@ -70,6 +67,16 @@ struct ChapterView: View {
                 }
             }
         }
+    }
+    
+    func versRow(vers: CDVers) -> some View {
+        return Group {
+            Text("\(vers.index) " + (vers.notes.isEmpty ? "" : "*")).font(viewModel.indexSize)
+                + Text(vers.szoveg.strippedHTMLElements).font(viewModel.textSize)
+        }
+        .id(vers.gepi)
+        .lineSpacing(6)
+        
     }
 
     func continousText(reader: ScrollViewProxy) -> some View {

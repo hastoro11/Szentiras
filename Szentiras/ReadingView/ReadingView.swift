@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ReadingView: View {
+    @Environment(\.managedObjectContext) var context
     @EnvironmentObject var store: BibliaStore
     @ObservedObject var viewModel = ReadingViewModel()
     @Binding var selectedTab: Int
@@ -77,7 +78,11 @@ struct ReadingView: View {
                 .padding(.leading)
             HStack {
                 ForEach(["Red", "Blue", "Yellow", "Green"], id:\.self) { color in
-                    Circle().fill(Color(color)).frame(width: .bigCircle, height: .bigCircle)
+                    Button(action: {
+                        vers.setMarking(color: color, context: context)                        
+                    }) {
+                        Circle().fill(Color(color)).frame(width: .bigCircle, height: .bigCircle)
+                    }
                 }
             }
             .padding()

@@ -5,7 +5,7 @@
 //  Created by Gabor Sornyei on 2020. 09. 16..
 //
 
-import Foundation
+import SwiftUI
 import CoreData
 
 extension CDVers {
@@ -40,6 +40,9 @@ extension CDVers {
     var notes: String {
         get { notes_ ?? ""}
         set { notes_ = newValue }
+    }
+    var marking: Color {
+        get { return marking_ == nil ? Color.clear : Color(marking_!) }
     }
 }
 
@@ -94,5 +97,15 @@ extension CDVers {
         self.notes_ = nil
         self.timestamp = nil
         try? context.save()
+    }
+    
+    func setMarking(color: String, context: NSManagedObjectContext) {
+        if marking_ == color {
+            self.marking_ = nil
+        } else {
+            self.marking_ = color
+        }        
+        try? context.save()
+        self.objectWillChange.send()
     }
 }
