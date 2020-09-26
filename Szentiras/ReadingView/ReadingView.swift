@@ -48,6 +48,9 @@ struct ReadingView: View {
                 Alert(title: Text("Hiba"), message: Text(error.description), dismissButton: .default(Text("OK")))
             }
             .navigationBarHidden(true)
+            .onAppear {
+                store.fetchVersesFromDatabaseFor(store.currentBook)
+            }
         }
 
     }

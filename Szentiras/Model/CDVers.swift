@@ -78,12 +78,21 @@ extension CDVers {
 
 extension CDVers {
     func saveNotes(notes: String, context: NSManagedObjectContext) {
-        let predicate = NSPredicate(format: "gepi_ = %@", self.gepi)
-        let request = CDVers.fetchRequest(predicate: predicate)
-        let verses = (try? context.fetch(request)) ?? []
-        verses.forEach({vers in
-            vers.notes = notes
-        })
+//        let predicate = NSPredicate(format: "gepi_ = %@", self.gepi)
+//        let request = CDVers.fetchRequest(predicate: predicate)
+//        let verses = (try? context.fetch(request)) ?? []
+//        verses.forEach({vers in
+//            vers.notes = notes
+//            vers.timestamp = Date()
+//        })
+        self.notes = notes
+        self.timestamp = Date()
+        try? context.save()
+    }
+    
+    func deleteNotes(context: NSManagedObjectContext) {
+        self.notes_ = nil
+        self.timestamp = nil
         try? context.save()
     }
 }

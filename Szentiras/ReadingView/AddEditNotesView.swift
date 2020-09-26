@@ -16,6 +16,20 @@ struct AddEditNotesView: View {
         self.vers = vers
         _notes = State(wrappedValue: vers.notes)
     }
+    var color: Color {
+        switch vers.translation {
+        case "RUF":
+            return .colorYellow
+        case "KG":
+            return .colorRed
+        case "KNB":
+            return .colorGreen
+        case "SZIT":
+            return .colorBlue
+        default:
+            return .clear
+        }
+    }
     var body: some View {
         VStack {
             HStack {
@@ -34,7 +48,7 @@ struct AddEditNotesView: View {
             .padding(EdgeInsets(top: 8, leading: 16, bottom: 0, trailing: 16))
             Divider()
             HStack {
-                Circle().fill(Color.colorRed)
+                Circle().fill(color)
                     .frame(width: .smallCircle, height: .smallCircle)
                 Text(vers.szep)
                     .font(.medium14)
@@ -42,6 +56,10 @@ struct AddEditNotesView: View {
                 
             }
             .padding(EdgeInsets(top: 16, leading: 16, bottom: 0, trailing: 16))
+            
+            Text(vers.szoveg)
+                .font(.light18)
+                .padding(.horizontal)
             
             TextEditor(text: $notes)
                 .font(.light20)
@@ -57,7 +75,7 @@ struct AddEditNotesView: View {
                     .font(.medium16)
                     .frame(maxWidth: .infinity)
                     .frame(height: 54)
-                    .background(RoundedRectangle(cornerRadius: 12).fill(Color.colorRed))
+                    .background(RoundedRectangle(cornerRadius: 12).fill(color))
             })
             .accentColor(.white)
             .padding()

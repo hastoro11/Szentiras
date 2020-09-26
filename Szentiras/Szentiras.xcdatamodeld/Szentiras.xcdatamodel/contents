@@ -14,6 +14,7 @@
         <attribute name="notes_" optional="YES" attributeType="String"/>
         <attribute name="szep_" optional="YES" attributeType="String"/>
         <attribute name="szoveg_" optional="YES" attributeType="String"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="translation_" optional="YES" attributeType="String"/>
     </entity>
     <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
@@ -21,7 +22,7 @@
     </entity>
     <elements>
         <element name="CDBook" positionX="-63" positionY="-18" width="128" height="103"/>
-        <element name="CDVers" positionX="-63" positionY="9" width="128" height="163"/>
+        <element name="CDVers" positionX="-63" positionY="9" width="128" height="178"/>
         <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
     </elements>
 </model>
