@@ -29,6 +29,12 @@ struct AppTabView: View {
                     Text("Jegyzetek")
                 }
                 .tag(2)
+            FavoritesView(selectedTab: $selectedTab)
+                .tabItem {
+                    Image(systemName: "star")
+                    Text("Kedvencek")
+                }
+                .tag(3)
         }
     }
 }

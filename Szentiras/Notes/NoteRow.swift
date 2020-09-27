@@ -10,6 +10,7 @@ import Combine
 
 struct NoteRow: View {
     @ObservedObject var vers: CDVers
+    @Binding var selectedTab: Int
     var color: Color {
         switch vers.translation {
         case "RUF":
@@ -28,7 +29,7 @@ struct NoteRow: View {
     @State var cancellable: AnyCancellable?
     var body: some View {
         NavigationLink(
-            destination: AddEditNotesView(vers: vers)) {
+            destination: AddEditNotesView(vers: vers, selectedTab: $selectedTab)) {
             VStack {
                 HStack(spacing: 20) {
                     Text(vers.translation)

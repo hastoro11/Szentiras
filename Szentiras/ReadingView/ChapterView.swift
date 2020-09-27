@@ -13,10 +13,8 @@ struct ChapterView: View {
     var verses: [CDVers]
     @Binding var highlightedVers: CDVers?
     @Binding var hideHeader: Bool
-    var bookTitle: String {
-        let book = store.currentBook
-        return book?.name ?? ""
-    }
+    var bookTitle: String { store.currentBook?.name ?? "" }
+
     var body: some View {
         ScrollViewReader { reader in
             ScrollView(showsIndicators: false) {
@@ -39,6 +37,13 @@ struct ChapterView: View {
                     }
                 }
             }
+            .onChange(of: store.scrollToTarget) { gepi in
+                if let gepi = gepi {
+                    withAnimation(.easeInOut){
+                        reader.scrollTo(gepi, anchor: .top)
+                    }
+                }
+            }
         }
     }   
 
@@ -46,21 +51,23 @@ struct ChapterView: View {
     func notContinuous(reader: ScrollViewProxy) -> some View {
         Group {
             if viewModel.showIndex {
-                ForEach(verses) { vers in
-                    versRow(vers: vers)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .background(vers.marking.opacity(0.3))
-                        .background(highlightedVers == vers ? Color.black.opacity(0.2) : Color.clear)
-                        .onTapGesture {
-                            withAnimation(.spring()) {
-                                hideHeader.toggle()
+                    ForEach(verses) { vers in
+                        versRow(vers: vers)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(vers.marking.opacity(0.3))
+                            .background(highlightedVers == vers ? Color.black.opacity(0.2) : Color.clear)
+                            .onTapGesture {
+                                withAnimation(.spring()) {
+                                    hideHeader.toggle()
+                                }
                             }
-                        }
-                        .onLongPressGesture {
-                            highlightedVers = vers
-                            reader.scrollTo(vers.gepi, anchor: .top)
-                        }
-                }
+                            .onLongPressGesture {
+                                highlightedVers = vers
+                                withAnimation(.easeInOut) {
+                                    reader.scrollTo(vers.gepi, anchor: .top)
+                                }
+                            }
+                    }
             } else {
                 ForEach(verses) { vers in
                     Text(vers.szoveg.strippedHTMLElements).font(viewModel.textSize).lineSpacing(6)

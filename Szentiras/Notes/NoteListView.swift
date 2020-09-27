@@ -30,7 +30,7 @@ struct NoteListView: View {
                 } else {
                     List {
                         ForEach(verses.filter({!$0.notes.isEmpty})) { vers in
-                            NoteRow(vers: vers)
+                            NoteRow(vers: vers, selectedTab: $selectedTab)
                         }
                         .onDelete(perform: delete)
                     }

@@ -85,7 +85,7 @@ struct ReadingView: View {
             .padding()
             
             NavigationLink(
-                destination: AddEditNotesView(vers: highlightedVers!),
+                destination: AddEditNotesView(vers: highlightedVers!, selectedTab: $selectedTab),
                 label: {
                     Text("Jegyzetek")
                         .font(.medium16)

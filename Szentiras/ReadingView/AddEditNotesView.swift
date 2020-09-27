@@ -10,11 +10,14 @@ import SwiftUI
 struct AddEditNotesView: View {
     @Environment(\.managedObjectContext) var context
     @Environment(\.presentationMode) var presentationMode
+    @EnvironmentObject var store: BibliaStore
     var vers: CDVers
-    @State var notes: String    
-    init(vers: CDVers) {
+    @State var notes: String
+    @Binding var selectedTab: Int
+    init(vers: CDVers, selectedTab: Binding<Int>) {
         self.vers = vers
         _notes = State(wrappedValue: vers.notes)
+        _selectedTab = selectedTab
     }
     var color: Color {
         switch vers.translation {
@@ -53,13 +56,19 @@ struct AddEditNotesView: View {
                 Text(vers.szep)
                     .font(.medium14)
                 Spacer()
-                
+                Button(action: gotoSelectedVers) {
+                    Image(systemName: "chevron.right")
+                        .frame(width: .smallCircle, height: .smallCircle)
+                        .background(Circle().fill(color))
+                        .foregroundColor(.white)
+                }
             }
             .padding(EdgeInsets(top: 16, leading: 16, bottom: 0, trailing: 16))
             
             Text(vers.szoveg)
                 .font(.light18)
                 .padding(.horizontal)
+                .frame(maxWidth: .infinity, alignment: .leading)
             
             TextEditor(text: $notes)
                 .font(.light20)
@@ -81,6 +90,19 @@ struct AddEditNotesView: View {
             .padding()
         }
         .navigationBarHidden(true)
+    }
+    
+    func gotoSelectedVers() {
+        presentationMode.wrappedValue.dismiss()
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.1) {
+            selectedTab = 1
+            if let book = CDBook.fetchBookByAbbrev(abbrev: vers.book, context: context) {
+                store.currentBook = book
+                store.translation = Translation(rawValue: vers.translation) ?? .RUF
+                store.currentChapter = vers.chapter
+                store.scrollToTarget = vers.gepi
+            }
+        }
     }
 }
 

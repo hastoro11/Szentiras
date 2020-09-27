@@ -36,6 +36,7 @@ class BibliaStore: ObservableObject {
             userDefaultsManager.setIntValue(newValue, forKey: .currentChapter)
         }
     }
+    @Published var scrollToTarget: String?
     
     var saveFlag: Bool = true
     

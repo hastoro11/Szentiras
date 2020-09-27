@@ -46,6 +46,13 @@ extension CDBook {
         })
     }
     
+    static func fetchBookByAbbrev(abbrev: String, context: NSManagedObjectContext) -> CDBook? {
+        let predicate = NSPredicate(format: "abbrev_ = %@", abbrev)
+        let request = Self.fetchRequest(predicate: predicate)
+        let books = (try? context.fetch(request)) ?? []
+        return books.first        
+    }
+    
     func isCatholic() -> Bool {
         return self.number == 117 || self.number == 118 || self.number == 125 || self.number == 126 || self.number == 130 || self.number == 145 || self.number == 146
     }
