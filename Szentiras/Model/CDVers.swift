@@ -56,9 +56,17 @@ extension CDVers {
     }
     
     static func saveVersesFromResults(book: CDBook, results: [Result], context: NSManagedObjectContext) {
+        if checkIfBookHasBeenSaved(book: book, context: context) { return }
         results.forEach({result in
             saveVersesFromOneResult(book: book, result: result, context: context)
         })
+    }
+    
+    private static func checkIfBookHasBeenSaved(book: CDBook, context: NSManagedObjectContext) -> Bool {
+        let predicate = NSPredicate(format: "book_ = %@ and translation_ = %@", argumentArray: [book.abbrev, book.translation.rawValue])
+        let request = CDVers.fetchRequest(predicate: predicate)
+        let verses = (try? context.fetch(request)) ?? []
+        return !verses.isEmpty
     }
     
     private static func saveVersesFromOneResult(book: CDBook, result: Result, context: NSManagedObjectContext) {

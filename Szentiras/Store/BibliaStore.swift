@@ -37,6 +37,8 @@ class BibliaStore: ObservableObject {
         }
     }
     
+    var saveFlag: Bool = true
+    
     init(context: NSManagedObjectContext) {
         
         userDefaultsManager = UserDefaultManager()
@@ -48,6 +50,11 @@ class BibliaStore: ObservableObject {
         
         $translation
             .sink(receiveValue: fetchAllBooksFromDatabase(translation:))
+            .store(in: &cancellables)
+        $translation
+            .sink { [self] _ in
+                fetchVersesFromDatabaseFor(currentBook)
+            }
             .store(in: &cancellables)
         $currentBook
             .sink(receiveValue: fetchVersesFromDatabaseFor)
@@ -73,12 +80,18 @@ class BibliaStore: ObservableObject {
                 isLoading = false
                 switch completion {
                 case .failure(let error):
+                    if error == .server {
+                        if translation == .KG {
+                            translation = .RUF
+                        }
+                        
+                    }
                     self.error = error
                 default:
                     break
                 }
             }, receiveValue: { [self]results in
-                CDVers.saveVersesFromResults(book: book, results: results, context: context)
+                CDVers.saveVersesFromResults(book: book, results: results, context: context)                
                 fetchVersesFromDatabaseFor(book)
             })
             .store(in: &cancellables)

@@ -55,6 +55,9 @@ class NetworkLayer: ObservableObject {
         return URLSession.shared.dataTaskPublisher(for: url)
             .tryMap({data, response in
                 if let response = response as? HTTPURLResponse, !(200...299).contains(response.statusCode) {
+                    if response.statusCode == 500 {
+                        throw BibliaError.server
+                    }
                     throw BibliaError.network
                 }
                 if data.isEmpty {

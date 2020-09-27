@@ -48,10 +48,7 @@ struct ReadingView: View {
             .alert(item: $store.error) { (error) -> Alert in
                 Alert(title: Text("Hiba"), message: Text(error.description), dismissButton: .default(Text("OK")))
             }
-            .navigationBarHidden(true)
-            .onAppear {
-                store.fetchVersesFromDatabaseFor(store.currentBook)
-            }
+            .navigationBarHidden(true)            
         }
 
     }
