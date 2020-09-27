@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AppTabView: View {
-    @State var selectedTab = 0
+    @State var selectedTab = 1
     var body: some View {
         TabView(selection: $selectedTab) {
             BookView(selectedTab: $selectedTab)
@@ -23,6 +23,12 @@ struct AppTabView: View {
                     Text("Olvasás")
                 }
                 .tag(1)
+            NoteListView(selectedTab: $selectedTab)
+                .tabItem {
+                    Image(systemName: "note.text")
+                    Text("Jegyzetek")
+                }
+                .tag(2)
         }
     }
 }

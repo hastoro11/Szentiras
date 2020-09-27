@@ -46,7 +46,7 @@ enum BibliaError: Error, CustomStringConvertible, Identifiable {
         self.description
     }
     
-    case network, parsing, unknown
+    case network, parsing, server, unknown
     
     var description: String {
         switch self {
@@ -54,6 +54,8 @@ enum BibliaError: Error, CustomStringConvertible, Identifiable {
             return "Hálózati hiba, talán a készülék nem csatlakozik az internethez."
         case .parsing:
             return "Fordítási hiba, ha lehetőség van rá, értesítse a program készítőjét."
+        case .server:
+            return "Sajnos, ez a könyv ebben a fordításban nem található meg a szerveren. Használd a többi fordítást helyette."
         default:
             return "Ismeretlen hiba lépett fel. Ha lehetőség van rá, értesítse a program készítőjét."
         }

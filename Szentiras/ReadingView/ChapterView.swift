@@ -11,43 +11,55 @@ struct ChapterView: View {
     @EnvironmentObject var viewModel: ReadingViewModel
     @EnvironmentObject var store: BibliaStore
     var verses: [CDVers]
+    @Binding var highlightedVers: CDVers?
+    @Binding var hideHeader: Bool
     var bookTitle: String {
         let book = store.currentBook
         return book?.name ?? ""
     }
-    var body: some View {        
-        ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 6) {
-                VStack {
-                    Text(bookTitle)
-                        .font(.bold26)
-                        .multilineTextAlignment(.center)
-                    Text("\(store.currentChapter). fejezet")
-                        .font(.medium22)
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                if viewModel.continous {
-                    continousText()
-                }
-                
-                if !viewModel.continous {
-                    notContinuous()
-                        .lineSpacing(6)
+    var body: some View {
+        ScrollViewReader { reader in
+            ScrollView(showsIndicators: false) {
+                VStack(alignment: .leading, spacing: 6) {
+                    VStack {
+                        Text(bookTitle)
+                            .font(.bold26)
+                            .multilineTextAlignment(.center)
+                        Text("\(store.currentChapter). fejezet")
+                            .font(.medium22)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    if viewModel.continous {
+                        continousText(reader: reader)
+                    }
+                    
+                    if !viewModel.continous {
+                        notContinuous(reader: reader)
+                            .lineSpacing(6)
+                    }
                 }
             }
         }
     }   
 
     @ViewBuilder
-    func notContinuous() -> some View {
+    func notContinuous(reader: ScrollViewProxy) -> some View {
         Group {
             if viewModel.showIndex {
                 ForEach(verses) { vers in
-                    Group {
-                        Text("\(vers.index) ").font(viewModel.indexSize)
-                            + Text(vers.szoveg.strippedHTMLElements).font(viewModel.textSize)
-                    }
-                    .lineSpacing(6)
+                    versRow(vers: vers)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(vers.marking.opacity(0.3))
+                        .background(highlightedVers == vers ? Color.black.opacity(0.2) : Color.clear)
+                        .onTapGesture {
+                            withAnimation(.spring()) {
+                                hideHeader.toggle()
+                            }
+                        }
+                        .onLongPressGesture {
+                            highlightedVers = vers
+                            reader.scrollTo(vers.gepi, anchor: .top)
+                        }
                 }
             } else {
                 ForEach(verses) { vers in
@@ -56,14 +68,24 @@ struct ChapterView: View {
             }
         }
     }
+    
+    func versRow(vers: CDVers) -> some View {
+        return Group {
+            Text("\(vers.index) " + (vers.notes.isEmpty ? "" : "*")).font(viewModel.indexSize)
+                + Text(vers.szoveg.strippedHTMLElements).font(viewModel.textSize)
+        }
+        .id(vers.gepi)
+        .lineSpacing(6)
+        
+    }
 
-    func continousText() -> some View {
+    func continousText(reader: ScrollViewProxy) -> some View {
         let versek = verses.reduce("") { (result, vers) in
             result + (vers.szoveg.strippedHTMLElements) + " "
         }
         var text = Text("")
         for vers in verses {
-            text = text + Text("\(vers.index) ").font(viewModel.indexSize)
+            text = text + Text("\(vers.index) " + (vers.notes.isEmpty ? "" : "*")).font(viewModel.indexSize)
             text = text + Text(vers.szoveg.strippedHTMLElements).font(viewModel.textSize) + Text(" ")
         }
         return Group {
@@ -76,6 +98,7 @@ struct ChapterView: View {
                 text.lineSpacing(6)
             }
         }
+        
     }
 }
 

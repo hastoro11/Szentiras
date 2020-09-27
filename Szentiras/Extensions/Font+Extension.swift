@@ -17,6 +17,7 @@ extension Font {
     static var medium16: Font { Font.custom("FiraSans-Medium", size: 16) }
     static var medium14: Font { Font.custom("FiraSans-Medium", size: 14) }
     static var medium12: Font { Font.custom("FiraSans-Medium", size: 12) }
+    static var regular14: Font { Font.custom("FiraSans-Regular", size: 14) }
     static var regular12: Font { Font.custom("FiraSans-Regular", size: 12) }
     static var light22: Font { Font.custom("FiraSans-Light", size: 22) }
     static var light20: Font { Font.custom("FiraSans-Light", size: 20) }
