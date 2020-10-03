@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AppTabView: View {
-    @State var selectedTab = 1
+    @State var selectedTab = 3
     var body: some View {
         TabView(selection: $selectedTab) {
             BookView(selectedTab: $selectedTab)

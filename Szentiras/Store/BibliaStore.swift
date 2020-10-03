@@ -37,9 +37,15 @@ class BibliaStore: ObservableObject {
         }
     }
     @Published var scrollToTarget: String?
+
+    @Published var favouritesDictionary: [String: [FavoriteVers]] = [
+        "Red": [],
+        "Yellow": [],
+        "Green": [],
+        "Blue": []
+    ]
     
-    var saveFlag: Bool = true
-    
+    // MARK: - Init
     init(context: NSManagedObjectContext) {
         
         userDefaultsManager = UserDefaultManager()
@@ -60,8 +66,69 @@ class BibliaStore: ObservableObject {
         $currentBook
             .sink(receiveValue: fetchVersesFromDatabaseFor)
             .store(in: &cancellables)
+        
+        // Favourites
+        var url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        print(url.path)
+        url.appendPathComponent("Favourites")
+        url.appendPathExtension("json")
+        
+        if !FileManager.default.fileExists(atPath: url.path) {
+            saveFavourites()
+        } else {
+            loadFavourites()
+        }
+        print(favouritesDictionary)
     }
     
+    // MARK: - Favourites functions
+    private func saveFavourites() {
+        var url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        url.appendPathComponent("Favourites")
+        url.appendPathExtension("json")
+                
+        let encoder = JSONEncoder()
+        let data = try! encoder.encode(favouritesDictionary)
+
+        try? data.write(to: url)
+    }
+    
+    private func loadFavourites() {
+        var url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        url.appendPathComponent("Favourites")
+        url.appendPathExtension("json")
+        
+        let decoder = JSONDecoder()
+        let data = try! Data(contentsOf: url)
+        favouritesDictionary = (try? decoder.decode([String: [FavoriteVers]].self, from: data)) ?? [:]
+    }
+    
+    func addFavourite(vers: CDVers) {
+        let favouriteVers = FavoriteVers(gepi: vers.gepi, szep: vers.szep, szoveg: vers.szoveg, translation: vers.translation, order: 0, timestamp: Date())
+        filterSavedFavourites(vers: favouriteVers)
+        
+        if vers.marking_ != nil {
+            favouritesDictionary[vers.marking_!]?.append(favouriteVers)
+        }
+        saveFavourites()
+        print(favouritesDictionary)
+    }
+    
+    private func filterSavedFavourites(vers: FavoriteVers) {
+        for key in favouritesDictionary.keys {
+            favouritesDictionary[key] = favouritesDictionary[key]?.filter({$0.gepi != vers.gepi || $0.translation != vers.translation})
+        }
+    }
+    
+    // MARK: - Translation change
+    func changeTranslation(to translation: Translation) {
+        if self.translation.changesFromCatholicToProtestant(to: translation) && self.currentBook!.isCatholic() {
+            userDefaultsManager.setIntValue(108, forKey: .currentBook)
+        }
+        self.translation = translation
+    }
+    
+    //MARK: - Fetching functions
     func fetchVersesFromDatabaseFor(_ book: CDBook?) {
         guard let book = book else {return}
         let request = CDVers.fetchRequest(predicate: NSPredicate(format: "translation_ = %@ and book_ = %@", book.translation.rawValue, book.abbrev))
@@ -98,12 +165,6 @@ class BibliaStore: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func changeTranslation(to translation: Translation) {
-        if self.translation.changesFromCatholicToProtestant(to: translation) && self.currentBook!.isCatholic() {
-            userDefaultsManager.setIntValue(108, forKey: .currentBook)
-        }
-        self.translation = translation
-    }
     
     func fetchAllBooksFromDatabase(translation: Translation) {
         let request = CDBook.fetchRequest(predicate: NSPredicate(format: "translation_ = %@", translation.rawValue))

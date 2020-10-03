@@ -76,7 +76,8 @@ struct ReadingView: View {
             HStack {
                 ForEach(["Red", "Blue", "Yellow", "Green"], id:\.self) { color in
                     Button(action: {
-                        vers.setMarking(color: color, context: context)                        
+                        vers.setMarking(color: color, context: context)
+                        store.addFavourite(vers: vers)
                     }) {
                         Circle().fill(Color(color)).frame(width: .bigCircle, height: .bigCircle)
                     }
