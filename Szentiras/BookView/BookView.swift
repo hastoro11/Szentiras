@@ -39,10 +39,7 @@ struct BookView: View {
             }
             Spacer()
         }
-        .padding(.horizontal)
-        .onAppear {
-            print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0])
-        }
+        .padding(.horizontal)        
     }
     
     func bookList(books: [CDBook]) -> some View {

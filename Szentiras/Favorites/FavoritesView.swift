@@ -7,9 +7,11 @@
 
 import SwiftUI
 
+
 struct FavoritesView: View {
     @Binding var selectedTab: Int
     @EnvironmentObject var store: BibliaStore
+    @Environment(\.editMode) var editMode
     var favouritesDictionary: [String: [FavoriteVers]] {
         store.favouritesDictionary
     }
@@ -25,10 +27,31 @@ struct FavoritesView: View {
     var body: some View {
         VStack {
             HStack {
-                Spacer()
-                Text("Kedvencek")
-                    .font(.medium16)
-                Spacer()
+                ZStack {
+                    Text("Kedvencek")
+                        .font(.medium16)
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            withAnimation {
+                                editMode?.wrappedValue = editMode?.wrappedValue == .active ? .inactive : .active
+                            }
+                        }) {
+                            Group {
+                                if editMode?.wrappedValue == .inactive {
+                                    Image(systemName: "list.number")
+                                        .font(.medium22)
+                                } else {
+                                    Image(systemName: "checkmark")
+                                        .font(.medium22)
+                                }
+                            }
+                            .foregroundColor(.primary)
+                        }
+                    }
+                    .padding(.horizontal)
+                }
+                .padding(.horizontal)
             }
             
             if emptyDictionary {
@@ -39,15 +62,22 @@ struct FavoritesView: View {
                 Spacer()
             } else {
                 List {
-                    ForEach(keys, id:\.self) { color in
+                    ForEach(keys.sorted(), id:\.self) { color in
                         if !favourites(color: color).isEmpty {
                             Section(header: headerView(color: color)) {
-                                ForEach(favourites(color: color)) { fav in
+                                ForEach(favourites(color: color).sorted()) { fav in
                                     versRow(vers: fav, color: color)
+                                }
+                                .onDelete(perform: {indexSet in
+                                    store.deleteFavourites(color: color, indexSet: indexSet)
+                                })
+                                .onMove { (indexSet, newOffset) in
+                                    store.moveFavourites(color: color, indexSet: indexSet, newOffset: newOffset)
                                 }
                             }
                         }
                     }
+                    
                 }
                 .padding(.horizontal)
             }
@@ -93,8 +123,8 @@ struct FavoritesView: View {
 
 
 
-struct FavoritesView_Previews: PreviewProvider {
-    static var previews: some View {
-        FavoritesView(selectedTab: .constant(3))
-    }
-}
+//struct FavoritesView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        FavoritesView(selectedTab: .constant(3))
+//    }
+//}

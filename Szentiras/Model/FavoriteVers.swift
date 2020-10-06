@@ -7,7 +7,12 @@
 
 import Foundation
 
-struct FavoriteVers: Codable, Identifiable {
+struct FavoriteVers: Codable, Identifiable, Comparable {
+    
+    static func < (lhs: FavoriteVers, rhs: FavoriteVers) -> Bool {
+        lhs.order < rhs.order
+    }
+    
 
     var id: String { gepi }
     var gepi: String

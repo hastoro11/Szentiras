@@ -78,7 +78,6 @@ class BibliaStore: ObservableObject {
         } else {
             loadFavourites()
         }
-        print(favouritesDictionary)
     }
     
     // MARK: - Favourites functions
@@ -109,15 +108,41 @@ class BibliaStore: ObservableObject {
         
         if vers.marking_ != nil {
             favouritesDictionary[vers.marking_!]?.append(favouriteVers)
+            reorder(color: vers.marking_!)
         }
-        saveFavourites()
-        print(favouritesDictionary)
+        saveFavourites()        
     }
     
     private func filterSavedFavourites(vers: FavoriteVers) {
         for key in favouritesDictionary.keys {
             favouritesDictionary[key] = favouritesDictionary[key]?.filter({$0.gepi != vers.gepi || $0.translation != vers.translation})
         }
+    }
+    
+    func moveFavourites(color: String, indexSet: IndexSet, newOffset: Int) {
+        if favouritesDictionary[color] != nil {
+            favouritesDictionary[color]!.move(fromOffsets: indexSet, toOffset: newOffset)
+            reorder(color: color)
+        }
+        saveFavourites()
+    }
+    
+    func deleteFavourites(color: String, indexSet: IndexSet) {
+        if favouritesDictionary[color] != nil {
+            favouritesDictionary[color]!.remove(atOffsets: indexSet)
+            reorder(color: color)
+        }
+        saveFavourites()
+    }
+    
+    private func reorder(color: String) {
+        var favs = [FavoriteVers]()
+        for (i, v) in favouritesDictionary[color]!.enumerated() {
+            var f = v
+            f.order = i
+            favs.append(f)
+        }
+        favouritesDictionary[color]! = favs
     }
     
     // MARK: - Translation change

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AppTabView: View {
     @State var selectedTab = 3
+    @State var editMode: EditMode = .inactive
     var body: some View {
         TabView(selection: $selectedTab) {
             BookView(selectedTab: $selectedTab)
@@ -35,6 +36,7 @@ struct AppTabView: View {
                     Text("Kedvencek")
                 }
                 .tag(3)
+                .environment(\.editMode, $editMode)
         }
     }
 }
