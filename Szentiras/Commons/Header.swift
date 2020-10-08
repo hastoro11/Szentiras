@@ -15,6 +15,24 @@ struct Header: View {
     @Binding var selectedTab: Int
     var noReadingOption: Bool = true
     var readingView: Bool
+    enum SlideSheet {
+        case translation, settings
+    }
+    func toggleSlideSheets(menu: SlideSheet) {
+        withAnimation {
+            if menu == .settings {
+                showSettings.toggle()
+                if showSettings {
+                    showTranslationSheet = false
+                }
+            } else {
+                showTranslationSheet.toggle()
+                if showTranslationSheet {
+                    showSettings = false
+                }
+            }
+        }
+    }
     var body: some View {
         HStack {
             Button(action: {
@@ -36,13 +54,15 @@ struct Header: View {
                 .font(.medium16)
             Spacer()
             Button(action: {
-                showSettings.toggle()
+//                showSettings.toggle()
+                toggleSlideSheets(menu: .settings)
             }, label: {
                 IconButton(icon: "textformat", size: 44, color: .colorGreen)
             })
             .opacity(noReadingOption ? 0.0 : 1.0)
             Button(action: {
-                showTranslationSheet.toggle()
+//                showTranslationSheet.toggle()
+                toggleSlideSheets(menu: .translation)
             }, label: {
                 IconButton(icon: "bubble.left.and.bubble.right", size: 44, color: .colorRed)
             })

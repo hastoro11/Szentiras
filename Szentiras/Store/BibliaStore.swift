@@ -127,6 +127,13 @@ class BibliaStore: ObservableObject {
         saveFavourites()
     }
     
+    func deleteFavourite(vers: CDVers) {
+        guard let color = vers.marking_, let favs = favouritesDictionary[color], let index = favs.firstIndex(where: {$0.gepi == vers.gepi && $0.translation == vers.translation}) else { return }
+        favouritesDictionary[color]!.remove(at: index)
+        reorder(color: color)
+        saveFavourites()
+    }
+    
     func deleteFavourites(color: String, indexSet: IndexSet) {
         if favouritesDictionary[color] != nil {
             for i in indexSet {

@@ -117,4 +117,10 @@ extension CDVers {
         try? context.save()
         self.objectWillChange.send()
     }
+    
+    func deleteMarking(context: NSManagedObjectContext) {
+        self.marking_ = nil
+        try? context.save()
+        self.objectWillChange.send()
+    }
 }
