@@ -85,17 +85,18 @@ extension CDVers {
             try? context.save()
         }
     }
+    
+    static func deleteMarking(color: String, vers: FavoriteVers, context: NSManagedObjectContext) {
+        let predicate = NSPredicate(format: "marking_ = %@ and gepi_ = %@ and translation_ = %@", color, vers.gepi, vers.translation)
+        let request = fetchRequest(predicate: predicate)
+        let verses = (try? context.fetch(request)) ?? []
+        _ = verses.map({$0.marking_ = nil})
+        try? context.save()
+    }
 }
 
 extension CDVers {
     func saveNotes(notes: String, context: NSManagedObjectContext) {
-//        let predicate = NSPredicate(format: "gepi_ = %@", self.gepi)
-//        let request = CDVers.fetchRequest(predicate: predicate)
-//        let verses = (try? context.fetch(request)) ?? []
-//        verses.forEach({vers in
-//            vers.notes = notes
-//            vers.timestamp = Date()
-//        })
         self.notes = notes
         self.timestamp = Date()
         try? context.save()
@@ -113,6 +114,12 @@ extension CDVers {
         } else {
             self.marking_ = color
         }        
+        try? context.save()
+        self.objectWillChange.send()
+    }
+    
+    func deleteMarking(context: NSManagedObjectContext) {
+        self.marking_ = nil
         try? context.save()
         self.objectWillChange.send()
     }

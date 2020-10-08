@@ -24,7 +24,7 @@ struct NoteListView: View {
                     VStack {
                         Spacer()
                         Text("Nincsenek még jegyzetek")
-                            .font(.light20)
+                            .font(.light18)
                         Spacer()
                     }
                 } else {

@@ -10,13 +10,17 @@ import SwiftUI
 struct ReadingView: View {
     @Environment(\.managedObjectContext) var context
     @EnvironmentObject var store: BibliaStore
+    
     @ObservedObject var viewModel = ReadingViewModel()
+    
     @Binding var selectedTab: Int
+    
     @State var showTranslationSheet = false
     @State var showSettings = false
     @State var selectedBook: CDBook?
     @State var hideHeader = false
     @State var highlightedVers: CDVers?
+
     var body: some View {        
         NavigationView {
             ZStack(alignment: .bottom) {
@@ -36,6 +40,16 @@ struct ReadingView: View {
                 .padding(.horizontal)
                 .zIndex(0)
                 // end VStack
+                if showSettings {
+                    Color.black.opacity(0.2)
+                        .edgesIgnoringSafeArea(.all)
+                        .onTapGesture {
+                            withAnimation {
+                                showSettings = false
+                            }
+                        }                        
+                        .zIndex(5)
+                }
 
                 if showSettings {
                     settingsView
@@ -73,14 +87,25 @@ struct ReadingView: View {
             Text("Kiemelés")
                 .font(.medium14)
                 .padding(.leading)
-            HStack {
+            HStack(spacing: 10) {
                 ForEach(["Red", "Blue", "Yellow", "Green"], id:\.self) { color in
                     Button(action: {
-                        vers.setMarking(color: color, context: context)                        
+                        vers.setMarking(color: color, context: context)
+                        store.addFavourite(vers: vers)
+                        highlightedVers = nil
                     }) {
                         Circle().fill(Color(color)).frame(width: .bigCircle, height: .bigCircle)
                     }
                 }
+                Button(action: {
+                    store.deleteFavourite(vers: vers)
+                    vers.deleteMarking(context: context)
+                    highlightedVers = nil
+                }) {
+                    Image(systemName: "xmark.circle")
+                        .font(.system(size: .bigCircle, weight: .thin))
+                        .foregroundColor(.black)
+                }                
             }
             .padding()
             
