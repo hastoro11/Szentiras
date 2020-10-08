@@ -85,6 +85,14 @@ extension CDVers {
             try? context.save()
         }
     }
+    
+    static func deleteMarking(color: String, vers: FavoriteVers, context: NSManagedObjectContext) {
+        let predicate = NSPredicate(format: "marking_ = %@ and gepi_ = %@ and translation_ = %@", color, vers.gepi, vers.translation)
+        let request = fetchRequest(predicate: predicate)
+        let verses = (try? context.fetch(request)) ?? []
+        _ = verses.map({$0.marking_ = nil})
+        try? context.save()
+    }
 }
 
 extension CDVers {

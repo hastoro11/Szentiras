@@ -32,7 +32,7 @@ struct AppTabView: View {
                 .tag(2)
             FavoritesView(selectedTab: $selectedTab)
                 .tabItem {
-                    Image(systemName: "star")
+                    Image(systemName: "bookmark")
                     Text("Kedvencek")
                 }
                 .tag(3)
