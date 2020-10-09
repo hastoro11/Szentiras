@@ -134,13 +134,26 @@ class BibliaStore: ObservableObject {
         saveFavourites()
     }
     
+    func deleteFavourite(color: String, vers: FavoriteVers) {
+        guard let dict = favouritesDictionary[color] else {
+            print("no dict")
+            return
+        }
+        guard let favIndex = dict.firstIndex(of: vers) else {
+            print("no index")
+            return
+        }
+        favouritesDictionary[color]!.remove(at: favIndex)
+        CDVers.deleteMarking(color: color, vers: vers, context: context)
+        reorder(color: color)
+        saveFavourites()
+    }
+    
     func deleteFavourites(color: String, indexSet: IndexSet) {
         if favouritesDictionary[color] != nil {
             for i in indexSet {
-                print("index", i)
                 CDVers.deleteMarking(color: color, vers: favouritesDictionary[color]![i], context: context)
-            }
-            print("color", color, "indexSet", indexSet)
+            }            
             favouritesDictionary[color]!.remove(atOffsets: indexSet)
             reorder(color: color)
             
@@ -157,6 +170,30 @@ class BibliaStore: ObservableObject {
             favs.append(f)
         }
         favouritesDictionary[color]! = favs
+    }
+    
+    func jumpToVers(vers: FavoriteVers) {
+        guard let translation = Translation(rawValue: vers.translation) else {
+            print("no translation")
+            return
+        }
+        self.changeTranslation(to: translation)
+        let bookAbbrev = String(vers.szep.split(separator: " ")[0])
+        let request = CDBook.fetchRequest(predicate: NSPredicate(format: "abbrev_ = %@", bookAbbrev))
+        guard let book = try? context.fetch(request)[0] else {
+            print("no book")
+            return
+        }
+        self.currentBook = book
+        guard let chapter = Int(vers.szep.split(separator: " ")[1].split(separator: ",")[0]) else {
+            print("no chapter")
+            return
+        }
+        self.currentChapter = chapter
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.scrollToTarget = vers.gepi
+        }
+        
     }
     
     // MARK: - Translation change

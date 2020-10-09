@@ -12,6 +12,8 @@ struct FavoritesView: View {
     @Binding var selectedTab: Int
     @EnvironmentObject var store: BibliaStore
     @Environment(\.editMode) var editMode
+    @Environment(\.managedObjectContext) var context
+    
     var favouritesDictionary: [String: [FavoriteVers]] {
         store.favouritesDictionary
     }
@@ -67,6 +69,7 @@ struct FavoritesView: View {
                             Section(header: headerView(color: color)) {
                                 ForEach(favourites(color: color).sorted()) { fav in
                                     versRow(vers: fav, color: color)
+                                        
                                 }
                                 .onDelete(perform: {indexSet in
                                     store.deleteFavourites(color: color, indexSet: indexSet)
@@ -74,6 +77,7 @@ struct FavoritesView: View {
                                 .onMove { (indexSet, newOffset) in
                                     store.moveFavourites(color: color, indexSet: indexSet, newOffset: newOffset)
                                 }
+                                
                             }
                         }
                     }
@@ -92,8 +96,8 @@ struct FavoritesView: View {
             .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
     }
     
-    func versRow(vers: FavoriteVers, color: String) -> some View {
-        HStack(spacing: 20) {
+    func versRow(vers: FavoriteVers, color: String) -> some View {        
+        return HStack(spacing: 20) {
             Circle().fill(Color(color)).frame(width: 24)
             VStack(alignment: .leading) {
                 HStack {
@@ -111,8 +115,25 @@ struct FavoritesView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .contextMenu(menuItems: {
+            Button(action: {
+                jumpToVers(vers: vers)
+            }) {
+                Label("Ugrás a szöveghez", systemImage: "arrow.uturn.up")
+            }
+            Button(action: {
+                store.deleteFavourite(color: color, vers: vers)
+            }) {
+                Label("Törlés", systemImage: "trash")
+            }
+        })
         
-        
+    }
+    
+    func jumpToVers(vers: FavoriteVers) {
+        print(vers)
+        selectedTab = 1
+        store.jumpToVers(vers: vers)
     }
 
     
