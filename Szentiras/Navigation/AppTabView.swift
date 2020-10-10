@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct AppTabView: View {
-    @State var selectedTab = 3
-    @State var editMode: EditMode = .inactive
+    @State var selectedTab = 0
+    @State var editMode: EditMode = .inactive    
     var body: some View {
         TabView(selection: $selectedTab) {
             BookView(selectedTab: $selectedTab)
