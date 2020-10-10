@@ -23,6 +23,7 @@ class BibliaStore: ObservableObject {
         }
     }
     
+    @Published var booksLoaded: Bool = false
     @Published var allBooks: [CDBook] = []
     @Published var allVersesInABook: [CDVers] = []
     
@@ -205,6 +206,7 @@ class BibliaStore: ObservableObject {
     }
     
     //MARK: - Fetching functions
+    // Fetching verses
     func fetchVersesFromDatabaseFor(_ book: CDBook?) {
         guard let book = book else {return}
         let request = CDVers.fetchRequest(predicate: NSPredicate(format: "translation_ = %@ and book_ = %@", book.translation.rawValue, book.abbrev))
@@ -241,13 +243,16 @@ class BibliaStore: ObservableObject {
             .store(in: &cancellables)
     }
     
-    
+    // Fetching books
     func fetchAllBooksFromDatabase(translation: Translation) {
         let request = CDBook.fetchRequest(predicate: NSPredicate(format: "translation_ = %@", translation.rawValue))
         let books = (try? context.fetch(request)) ?? []
         if books.isEmpty {
             fetchAllBooksFromNetwork(translation: translation)
-        } else {            
+        } else {
+            DispatchQueue.main.asyncAfter(deadline: .now()+1) { [self] in
+                booksLoaded = true
+            }            
             allBooks = books
             let currentBookNumber = userDefaultsManager.intValue(forKey: .currentBook)
             if let book = books.first(where: {$0.number == currentBookNumber}) {
@@ -260,7 +265,7 @@ class BibliaStore: ObservableObject {
         isLoading = true
         NetworkLayer.fetchAllBooksFromNetwork(translation: translation)
             .receive(on: RunLoop.main)
-            .sink(receiveCompletion: { [unowned self]completion in
+            .sink(receiveCompletion: { [unowned self]completion in                
                 isLoading = false
                 switch completion {
                 case .failure(let error):

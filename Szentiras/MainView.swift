@@ -12,18 +12,10 @@ struct MainView: View {
     var timerPublisher = Timer.publish(every: 1, on: RunLoop.main, in: .default).autoconnect()
     @State var cancellable: AnyCancellable?
     @State var count = 2
+    @EnvironmentObject var store: BibliaStore
     var body: some View {
-        if count != 0 {
-            SplashView()
-                .onAppear {
-                    cancellable = timerPublisher.sink(receiveValue: {_ in
-                        count = max(count-1, 0)
-                        if count == 0 {
-                            cancellable?.cancel()
-                        }
-                    })
-                    
-                }
+        if !store.booksLoaded {
+            SplashView()                
         } else {
             AppTabView()
         }
