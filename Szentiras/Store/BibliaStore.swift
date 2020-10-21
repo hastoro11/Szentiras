@@ -23,7 +23,9 @@ class BibliaStore: ObservableObject {
         }
     }
     
+    // Checked by SplashView
     @Published var booksLoaded: Bool = false
+    
     @Published var allBooks: [CDBook] = []
     @Published var allVersesInABook: [CDVers] = []
     
@@ -208,6 +210,7 @@ class BibliaStore: ObservableObject {
     //MARK: - Fetching functions
     // Fetching verses
     func fetchVersesFromDatabaseFor(_ book: CDBook?) {
+        isLoading = true
         guard let book = book else {return}
         let request = CDVers.fetchRequest(predicate: NSPredicate(format: "translation_ = %@ and book_ = %@", book.translation.rawValue, book.abbrev))
         let verses = (try? context.fetch(request)) ?? []
@@ -215,17 +218,17 @@ class BibliaStore: ObservableObject {
             fetchVersesFromNetwork(for: book)
         } else {
             allVersesInABook = verses
+            isLoading = false
         }
     }
     
-    func fetchVersesFromNetwork(for book: CDBook) {
-        isLoading = true
+    func fetchVersesFromNetwork(for book: CDBook) {        
         NetworkLayer.fetchVersesFromNetwork(for: book)
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [self]completion in
-                isLoading = false
                 switch completion {
                 case .failure(let error):
+                    isLoading = false
                     if error == .server {
                         if translation == .KG {
                             translation = .RUF
@@ -265,7 +268,7 @@ class BibliaStore: ObservableObject {
         isLoading = true
         NetworkLayer.fetchAllBooksFromNetwork(translation: translation)
             .receive(on: RunLoop.main)
-            .sink(receiveCompletion: { [unowned self]completion in                
+            .sink(receiveCompletion: { [unowned self]completion in
                 isLoading = false
                 switch completion {
                 case .failure(let error):

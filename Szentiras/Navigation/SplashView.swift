@@ -12,7 +12,7 @@ struct SplashView: View {
         ZStack {
             VStack {
                 Spacer()
-                Text("Azonnal indulunk")
+                Text("Szentírás")
                     .font(.bold36)
                     .padding(.bottom, 36)
                 ProgressView("Keresés...")

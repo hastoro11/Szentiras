@@ -39,7 +39,8 @@ struct BookView: View {
             }
             Spacer()
         }
-        .padding(.horizontal)        
+        .padding(.horizontal)
+        .frame(maxWidth: 756)
     }
     
     func bookList(books: [CDBook]) -> some View {

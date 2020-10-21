@@ -34,6 +34,7 @@ struct ReadingView: View {
                         ProgressView("Keresés...")
                     } else {
                         bookChapterTabview
+                            .frame(maxWidth: 756)
                     }
                     Spacer()
                 }
@@ -60,11 +61,11 @@ struct ReadingView: View {
                 }
             } // end ZStack
             .alert(item: $store.error) { (error) -> Alert in
-                Alert(title: Text("Hiba"), message: Text(error.description), dismissButton: .default(Text("OK")))
+                Alert(title: Text("Hiba‼️"), message: Text(error.description), dismissButton: .default(Text("OK")))
             }
             .navigationBarHidden(true)            
         }
-
+        .navigationViewStyle(StackNavigationViewStyle())
     }
     
     func highlightedVersView(_ vers: CDVers) -> some View {
@@ -123,7 +124,7 @@ struct ReadingView: View {
             
             Spacer()
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: 756)
         .frame(height: 250)
         .background(Color.white.edgesIgnoringSafeArea(.bottom).shadow(radius: 5))
         .zIndex(9)
@@ -146,29 +147,32 @@ struct ReadingView: View {
     
     var settingsView: some View {
         VStack(alignment: .leading) {
-            Spacer()
-            HStack {
-                Text("Betűnagyság")
-                    .font(.medium16)
-                Slider(value: $viewModel.fontSize, in: 0...3, step: 1)
-                .padding(.horizontal)
-            }
-            .padding(.bottom)
-            HStack {
-                Text("Versszámozás")
-                    .font(.medium16)
-                Toggle("", isOn: $viewModel.showIndex)
+            VStack {
+                Spacer()
+                HStack {
+                    Text("Betűnagyság")
+                        .font(.medium16)
+                    Slider(value: $viewModel.fontSize, in: 0...3, step: 1)
                     .padding(.horizontal)
+                }
+                .padding(.bottom)
+                HStack {
+                    Text("Versszámozás")
+                        .font(.medium16)
+                    Toggle("", isOn: $viewModel.showIndex)
+                        .padding(.horizontal)
+                }
+                .padding(.bottom)
+                HStack {
+                    Text("Folyamatos olvasás")
+                        .font(.medium16)
+                    Toggle("", isOn: $viewModel.continous)
+                        .padding(.horizontal)
+                }
+                .padding(.bottom)
+                Spacer()
             }
-            .padding(.bottom)
-            HStack {
-                Text("Folyamatos olvasás")
-                    .font(.medium16)
-                Toggle("", isOn: $viewModel.continous)
-                    .padding(.horizontal)
-            }
-            .padding(.bottom)
-            Spacer()
+            .frame(maxWidth: 756)
         }
         .padding()
         .frame(maxWidth: .infinity)

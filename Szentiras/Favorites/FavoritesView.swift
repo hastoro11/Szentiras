@@ -39,16 +39,11 @@ struct FavoritesView: View {
                                 editMode?.wrappedValue = editMode?.wrappedValue == .active ? .inactive : .active
                             }
                         }) {
-                            Group {
-                                if editMode?.wrappedValue == .inactive {
-                                    Image(systemName: "list.number")
-                                        .font(.medium22)
-                                } else {
-                                    Image(systemName: "checkmark")
-                                        .font(.medium22)
-                                }
-                            }
-                            .foregroundColor(.primary)
+                            Text(editMode?.wrappedValue == .inactive ? "Rendez" : "Kész")
+                                .font(.medium16)
+                                .foregroundColor(editMode?.wrappedValue == .inactive ? .black : .white)
+                                .padding(6)
+                                .background( RoundedRectangle(cornerRadius: 5).fill(editMode?.wrappedValue == .inactive ? Color.clear : Color.black))
                         }
                     }
                     .padding(.horizontal)
@@ -83,11 +78,11 @@ struct FavoritesView: View {
                     }
                     
                 }
+                
                 .padding(.horizontal)
             }
-            
-            
         }
+        .frame(maxWidth: 756)
     }
     
     func headerView(color: String) -> some View {

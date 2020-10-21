@@ -89,6 +89,7 @@ struct AddEditNotesView: View {
             .accentColor(.white)
             .padding()
         }
+        .frame(maxWidth: 756)
         .navigationBarHidden(true)
     }
     

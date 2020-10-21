@@ -38,12 +38,11 @@ struct NoteListView: View {
                 }
                 
             }
+            .frame(maxWidth: 756)
             .navigationTitle("")
             .navigationBarHidden(true)
-            .onAppear {
-                
-            }
         }
+        .navigationViewStyle(StackNavigationViewStyle())
     }
     
     func delete(indexSet: IndexSet) {
