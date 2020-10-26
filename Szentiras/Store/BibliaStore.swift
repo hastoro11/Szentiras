@@ -11,22 +11,23 @@ import Combine
 import CoreData
 
 class BibliaStore: ObservableObject {
+    // context
     var context: NSManagedObjectContext
+    
+    // Books
+    @Published var allBooks: [CDBook] = []
+
+    
     @Published var isLoading: Bool = false
     @Published var error: BibliaError?
     var cancellables = Set<AnyCancellable>()
     var userDefaultsManager: UserDefaultManager
     
-    @Published var translation: Translation {
-        willSet {
-            userDefaultsManager.setTranslationValue(newValue, forKey: .translation)
-        }
-    }
+    @Published var translation: Translation
     
     // Checked by SplashView
     @Published var booksLoaded: Bool = false
     
-    @Published var allBooks: [CDBook] = []
     @Published var allVersesInABook: [CDVers] = []
     
     @Published var currentBook: CDBook? {
@@ -50,7 +51,7 @@ class BibliaStore: ObservableObject {
     
     // MARK: - Init
     init(context: NSManagedObjectContext) {
-        
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!.path)
         userDefaultsManager = UserDefaultManager()
         
         self.context = context
@@ -61,6 +62,7 @@ class BibliaStore: ObservableObject {
         $translation
             .sink(receiveValue: fetchAllBooksFromDatabase(translation:))
             .store(in: &cancellables)
+        
         $translation
             .sink { [self] _ in
                 fetchVersesFromDatabaseFor(currentBook)
@@ -205,6 +207,7 @@ class BibliaStore: ObservableObject {
             userDefaultsManager.setIntValue(108, forKey: .currentBook)
         }
         self.translation = translation
+        userDefaultsManager.setTranslationValue(translation, forKey: .translation)
     }
     
     //MARK: - Fetching functions
